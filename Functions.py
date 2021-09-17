@@ -15,6 +15,7 @@ import string
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import math
+from git import Repo
 
 def GetData(url,saveas):
     # url: url where data is
@@ -784,6 +785,16 @@ def MakeTeamPage(Team,base):
     Html_file.write(page)
     Html_file.close()
     
+
+def git_push(pgr,cm):
+    try:
+        repo = Repo(pgr)
+        repo.git.add(update=True)
+        repo.index.commit(cm)
+        origin = repo.remote(name='origin')
+        origin.push()
+    except:
+        print('Some error occured while pushing the code')    
     
     
     
