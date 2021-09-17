@@ -46,7 +46,7 @@ Html_file= open("index.html","w")
 Html_file.write(thestring)
 Html_file.close()
 
-"""# Make figures
+# Make figures
 UpcomingFixtures = funcs.GetUpcomingFixtures()
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
@@ -56,7 +56,7 @@ for Team in Teams:
     
     
 for Team in Teams:
-    funcs.MakeTeamPage(Team,"TeamBase.txt")"""
+    funcs.MakeTeamPage(Team,"TeamBase.txt")
     
         
 

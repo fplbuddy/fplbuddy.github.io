@@ -774,12 +774,13 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    plt.show()
 
 def MakeTeamPage(Team,base):
-    Team = Team.replace(" ", "_")
+    Team2 = Team.replace(" ", "_")
     file = open(base)
     page = file.read()
     file.close()
-    page = page.replace("TeamStr", Team)
-    Html_file= open(Team + ".html","w")
+    page = page.replace("TeamStrbefore", Team)
+    page = page.replace("TeamStr", Team2)
+    Html_file= open(Team2 + ".html","w")
     Html_file.write(page)
     Html_file.close()
     
