@@ -1,0 +1,296 @@
+/*
+Reset Stylesheet
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section, summary,
+time, mark, audio, video {
+    margin:0;
+    padding:0;
+    border:0;
+    outline:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+body {
+    line-height:1;
+}
+
+article,aside,details,figcaption,figure,
+footer,header,hgroup,menu,nav,section {
+    display:block;
+}
+
+nav ul {
+    list-style:none;
+}
+
+blockquote, q {
+    quotes:none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content:'';
+    content:none;
+}
+
+a {
+    margin:0;
+    padding:0;
+    font-size:100%;
+    vertical-align:baseline;
+    background:transparent;
+}
+
+/* change colours to suit your needs */
+ins {
+    background-color:#ff9;
+    color:#000;
+    text-decoration:none;
+}
+
+/* change colours to suit your needs */
+mark {
+    background-color:#ff9;
+    color:#000;
+    font-style:italic;
+    font-weight:bold;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+abbr[title], dfn[title] {
+    border-bottom:1px dotted;
+    cursor:help;
+}
+
+table {
+    border-collapse:collapse;
+    border-spacing:0;
+}
+
+/* change border colour to suit your needs */
+hr {
+    display:block;
+    height:1px;
+    border:0;
+    border-top:1px solid #cccccc;
+    margin:1em 0;
+    padding:0;
+}
+
+input, select {
+    vertical-align:middle;
+}
+
+/* My Code */
+
+/*body {
+  background-image: linear-gradient(#add8e6, #FFFFFF);
+}
+
+.bodyclass {
+  background-image: linear-gradient(#add8e6, #FFFFFF);
+}*/
+
+h2 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #000;
+}
+
+h3 {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  color: #686868;
+}
+
+p {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 200;
+  font-size: 18px;
+  color: #686868;
+  text-align: justify;
+text-justify: inter-word;
+}
+
+a {
+  color: #686868;
+}
+
+a:hover {
+  color: black;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+table {
+  width: 100%; /* width of table */
+}
+
+table {
+  border-collapse: collapse; /* Collapses boarders that merge */
+  margin-left: auto;
+  margin-right: auto;
+}
+
+caption {
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  font-size: 20px;
+  color: #000;
+}
+
+th, td {
+  padding: 10px; /* Paddin in cell */
+  font-family: 'Montserrat', sans-serif;
+}
+
+td {
+  font-weight: 500;
+  font-size: 18px;
+  color: #000;
+}
+
+th {
+  font-weight: 200;
+  font-size: 18px;
+  color: #686868;
+  text-align: left; /* aligh header to the left */
+}
+
+tr {
+    border-bottom: 1px solid #ccc;
+}
+
+tbody tr td:first-child {
+  width: 30%;
+  min-width: 30%;
+  max-width: 30%;
+  word-break: break-all;
+}
+
+.logo {
+  height: 22px; /* height of logo */
+}
+
+.logoTeam {
+  width: 100%; /* Same as leftTeam */
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Create two unequal columns that floats next to each other */
+.column {
+  float: left;
+  padding: 40px;
+  /* height: 300px;  Should be removed. Only for demonstration */
+}
+
+.left {
+  width: 35%;
+}
+
+.right {
+  width: 65%;
+}
+
+.leftTeam {
+  width: 40%;
+}
+
+.rightTeam {
+  width: 60%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+
+@media screen and (max-width: 1100px) {
+  .column {
+    width: 100%;
+  }
+  .logoTeam {
+    width: 30%; /* Same as leftTeam */
+  }
+
+  .bodyclass {
+    background: #add8e6;
+  }
+
+}
+
+@media screen and (max-width: 700px) {
+  .column {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+
+  h3 {
+    font-size: 10px;
+  }
+
+  p {
+    font-size: 10px;
+  }
+
+  caption {
+    font-size: 12px;
+  }
+
+  td {
+    font-size: 10px;
+  }
+
+  th {
+    font-size: 10px;
+  }
+
+  .logo {
+    height: 10px; /* height of logo */
+  }
+
+  th, td {
+    padding: 5px; /* Paddin in cell */
+  }
+
+  .column {
+    padding: 20px;
+    /* height: 300px;  Should be removed. Only for demonstration */
+  }
+
+  .logoTeam {
+    width: 30%; /* Same as leftTeam */
+  }
+
+  .bodyclass {
+    background: #add8e6;
+  }
+}

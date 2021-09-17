@@ -1,0 +1,14 @@
+  <tr>
+    <td >
+<a style="text-decoration:none" href="TeamPic.html">
+    <span style="float: left"><img class="logo" src="logos/TeamPic2.png"> </span>
+        &nbsp; Team
+</a>
+    </td>
+    <td>num0</td>
+    <td>num1</td>
+    <td> num2</td>
+    <td> num3</td>
+    <td> num4</td>
+    <td> Total</td>
+  </tr>
