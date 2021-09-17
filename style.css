@@ -294,3 +294,54 @@ tbody tr td:first-child {
     background: #add8e6;
   }
 }
+
+@media screen and (max-width: 374px) {
+  .column {
+    width: 100%;
+  }
+
+  h2 {
+    font-size: 11px;
+  }
+
+  h3 {
+    font-size: 9px;
+  }
+
+  p {
+    font-size: 9px;
+  }
+
+  caption {
+    font-size: 11px;
+  }
+
+  td {
+    font-size: 9px;
+  }
+
+  th {
+    font-size: 9px;
+  }
+
+  .logo {
+    height: 9px; /* height of logo */
+  }
+
+  th, td {
+    padding: 4px; /* Paddin in cell */
+  }
+
+  .column {
+    padding: 18px;
+    /* height: 300px;  Should be removed. Only for demonstration */
+  }
+
+  .logoTeam {
+    width: 30%; /* Same as leftTeam */
+  }
+
+  .bodyclass {
+    background: #add8e6;
+  }
+}
