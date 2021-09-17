@@ -787,14 +787,14 @@ def MakeTeamPage(Team,base):
     
 
 def git_push(pgr,cm):
-    try:
+    #try:
         repo = Repo(pgr)
         repo.git.add(update=True)
         repo.index.commit(cm)
         origin = repo.remote(name='origin')
         origin.push()
-    except:
-        #print('Some error occured while pushing the code')    
+    #except:
+       # print('Some error occured while pushing the code')    
     
     
     
