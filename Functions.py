@@ -789,6 +789,7 @@ def MakeTeamPage(Team,base):
 def git_push(pgr,cm):
     try:
         repo = Repo(pgr)
+        print(repo)
         repo.git.add(update=True)
         repo.index.commit(cm)
         origin = repo.remote(name='origin')
