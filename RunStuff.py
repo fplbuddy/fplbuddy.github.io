@@ -59,7 +59,7 @@ for Team in Teams:
     funcs.MakeTeamPage(Team,"TeamBase.txt")
     
     
-funcs.git_push('/Users/philipwinchester/Sites/fplbuddy.github.io','Auto')
+funcs.git_push(r'/Users/philipwinchester/Sites/fplbuddy.github.io/.git','Auto')
 
     
         
