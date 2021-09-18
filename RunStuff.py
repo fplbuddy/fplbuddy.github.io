@@ -19,14 +19,9 @@ Match_Data= Match_Data.replace(['West Brom', 'Sheffield United', 'Fulham'],['Nor
 Teams = sorted(list(set(Match_Data['HomeTeam'])))
 Res = funcs.Optimise2(Match_Data, Teams)
 
-
-
 UpcomingFixtures = funcs.GetUpcomingFixtures(5)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
-
-AttackingData.to_csv('Data/AttackingData.csv', index = False)
-DefensiveData.to_csv('Data/DefensiveData .csv', index = False)
 
 file = open("htmlbase.txt")
 thestring = file.read()
