@@ -22,8 +22,8 @@ def GetData(url,saveas):
     # saveas: where we want to save data
     r = requests.get(url, allow_redirects=True)
     open(saveas, 'wb').write(r.content)
-    
-    
+
+
 def LoadData(files):
     # files: list of csv file paths
     # CurrentDate: The current date
@@ -47,20 +47,20 @@ def GetUpcomingFixtures(NumGWs = None):
     fp = urllib.request.urlopen("https://www.fantrax.com/newui/EPL/schedules.go#1")
     mybytes = fp.read()
     mystr = mybytes.decode("utf8")
-    
+
     GameWeekStrings = mystr.split("Gameweek") # Splitting by gameweek
     GameWeekStrings.pop(0) # remove the first two strings
     GameWeekStrings.pop(0)
     Upcoming_Fixtures = pd.DataFrame({'GW' : [], 'HomeTeam' : [], 'AwayTeam' : []})
     lastGW = ""
     count = 0
-    
+
     # This section checks if game in GWk has already been played and if so, removes the whole gameweek
     rem = [] # Makes an empty list
     for i,GameWeekString in enumerate(GameWeekStrings):
         at = GameWeekString.split("@") # split by @
         # if last entry of at[0] is not empty, then a game has been played!
-        if not(at[0][-1] == ' '): 
+        if not(at[0][-1] == ' '):
             rem.append(i)
     for index in sorted(rem, reverse=True):
         GameWeekStrings.pop(index)
@@ -86,16 +86,16 @@ def GetUpcomingFixtures(NumGWs = None):
             count += 1
             if count == NumGWs or lastGW == "38": # Will have to update the content and how we compile it once we get down to later gameweeks as well
                 break # Break if we have reached the number of GWs we want
-        
-             
+
+
     OldNames = ["Tottenham Hotspur", "Norwich City","Manchester City","Manchester United","Leicester City","West Ham United","Leeds United","Newcastle United","Wolverhampton"]
     NewNames = ["Tottenham", "Norwich","Man City","Man United","Leicester","West Ham","Leeds","Newcastle","Wolves"]
-    
+
     Upcoming_Fixtures = Upcoming_Fixtures.replace(OldNames, NewNames)
     return Upcoming_Fixtures
 
 def Playing(UpcomingFixtures,Team,GW):
-    # Given some Team and GW (str), find out who they are playing, 
+    # Given some Team and GW (str), find out who they are playing,
     playing = ''
     UpcomingFixtures = UpcomingFixtures[UpcomingFixtures["GW"] == GW]
     # First look in home
@@ -131,7 +131,7 @@ def tau(x,y,lamb,mu,rho):
     else:
         return 1
 
-def phi(t,eps = 0.002):
+def phi(t,eps = 0.004):
     # Define the weight function
     return np.exp(-eps*t)
 
@@ -372,7 +372,7 @@ def NormalisingTheGradientVector2(GradientVector, Teams):
   AlphaGradValues = GradientVector[0:len(Teams)]
   AverageAlphaGradValues = np.mean(AlphaGradValues) # This is the average of paramaters in notes. But in our corrections, we want to add the gradint. Hence, there should be a net 0 efferct on the everage of the alphas from the gradint, as they already add up to one.
   Normaliser = np.concatenate((AverageAlphaGradValues*np.ones(len(Teams)), np.zeros(len(Teams)+2)))
-  
+
   GradientVectorNorm = GradientVector - Normaliser
   m = max(abs(GradientVectorNorm))*100
 
@@ -449,7 +449,7 @@ def Optimise2(Match_Data, Teams, Parameters = None):
       got = 1
       # Setting all Parameters equal to 1 at first
       Parameters = np.ones(2*len(Teams)+2)
-    
+
       # Setting gamma equal to 1.3 and rho equal to -0.05
       Parameters[2*len(Teams)] = 1.3
       Parameters[2*len(Teams)+1] = -0.05
@@ -506,32 +506,32 @@ def Optimise2(Match_Data, Teams, Parameters = None):
 def ProbMatrix(HomeTeam, AwayTeam, Parameters, gamma, rho, Teams,Max = 10):
       # Function which takes two teams and returns a scoreline probability matrix.
       # Parameters is the set of parameters we have after running the Optimise function
-      # Max is the maximum number of goals we assume any team can score in a game.     
-      
+      # Max is the maximum number of goals we assume any team can score in a game.
+
       HomeIndex = Teams.index(HomeTeam)
       AwayIndex = Teams.index(AwayTeam)
-      
+
       # Finding relevant Parameters
       ai = Parameters['Alpha'][HomeIndex]
       aj = Parameters['Alpha'][AwayIndex]
       bi = Parameters['Beta'][HomeIndex]
       bj = Parameters['Beta'][AwayIndex]
-      
+
       lamb = ai*bj*gamma
       mu = aj*bi
-                   
+
       # Making the scoreline probability matrix, without the tau function at first
       Result = np.outer(poisson.pmf(np.arange(0,Max +1), lamb), poisson.pmf(np.arange(0,Max +1), mu))
-      
+
       # Adding the tau function
       Result[0,0] = Result[0,0]*(1-lamb*mu*rho)
       Result[1,0] = Result[1,0]*(1+mu*rho)
       Result[0,1] = Result[0,1]*(1+lamb*rho)
       Result[1,1] = Result[1,1]*(1-rho)
-      
+
       # Making sure probabilites add to one
       Result = Result/np.sum(Result)
-      
+
       return(Result)
 
 def ExpectedGoalsAndCS(ProbMatrix):
@@ -558,7 +558,7 @@ def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling 
         UpcomingFixtures['HTCS'][index] = HTCS*scaling
         UpcomingFixtures['ATCS'][index] = ATCS*scaling
     return  UpcomingFixtures
-    
+
 def GetTables(UpcomingFixtures,Teams):
     # Setting up the dfs
     GWS = list(set(UpcomingFixtures['GW']))
@@ -567,7 +567,7 @@ def GetTables(UpcomingFixtures,Teams):
     AttackingData = pd.DataFrame(data=AttackingData)
     for GW in GWS:
         AttackingData[GW] = 0.0
-    AttackingData['Total'] = 0.0       
+    AttackingData['Total'] = 0.0
     DefensiveData = AttackingData.copy()
     # Adding the data we want
     for GW in GWS:
@@ -592,7 +592,7 @@ def GetTables(UpcomingFixtures,Teams):
     # round total
     AttackingData['Total'] = AttackingData['Total'].apply(lambda x: round(x,2))
     DefensiveData['Total'] = DefensiveData['Total'].apply(lambda x: round(x,2))
-   
+
     return AttackingData,DefensiveData
 
 def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
@@ -607,7 +607,7 @@ def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
     # Fix if we do not have enough GWs in data
     for i in range(len(GWS),NGWIT):
         thestring = thestring.replace('GW ' + alphabet_list[i]*3,'-')
-        
+
     now = datetime.datetime.today().strftime('%d-%b-%Y')
     if now[0] == '0':
         day = now[1]
@@ -618,9 +618,9 @@ def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
 
 
 def MakeContent(thestring,Teams,UpcomingFixtures,Data,rep,base,NGWIT=5):
-    # Data: Where we take data from 
+    # Data: Where we take data from
     # rep: thing we want to replace
-    # base: where base of content part is 
+    # base: where base of content part is
     # NGWIT: Number if gameweeks we have in theory
     GWS = list(set(UpcomingFixtures['GW']))
     GWS.sort(key=float)
@@ -633,7 +633,7 @@ def MakeContent(thestring,Teams,UpcomingFixtures,Data,rep,base,NGWIT=5):
         add = add.replace("TeamPic",Team.replace(" ","_"))
         # edit team
         add = add.replace("Team",Team)
-        # edit GW  
+        # edit GW
         for i,GW in enumerate(GWS):
             num = Data[GW][t]
             add = add.replace('num'+str(i),"{:.2f}".format(num))
@@ -693,8 +693,8 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    Background = 'white'
    text_color = '#686868'
    #text_color = 'w'
-   
-   
+
+
    PlotData = Data[Data['Teams'] == Team].values.tolist()
    PlotData = PlotData[0]
    PlotData = PlotData[1:len(PlotData)-1]
@@ -705,7 +705,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    fig, ax = plt.subplots(figsize=(16,10))
     #plt.figure(figsize=(16,10), dpi= 100)
    ax.plot(GWS, PlotData, color=col,zorder = 2)
-    
+
     # Decoration
    yint = range(min(math.floor(min(PlotData)),1), max(math.ceil(max(PlotData))+1,5))
    plt.yticks(yint) # integer yticks
@@ -725,13 +725,13 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
        ax.set_ylabel('Expected Goals',color=text_color,fontsize=26,fontname = "Radikal")
    else:
        ax.set_ylabel('Defensive Score',color=text_color,fontsize=26,fontname = "Radikal")
-    
+
     # Remove borders
-   ax.spines["top"].set_visible(False)   
-   ax.spines["right"].set_visible(False)  
-   ax.spines["bottom"].set_color(text_color) 
+   ax.spines["top"].set_visible(False)
+   ax.spines["right"].set_visible(False)
+   ax.spines["bottom"].set_color(text_color)
    ax.spines["left"].set_color(text_color)
-    
+
     # Add images
    inv = fig.transFigure.inverted()
    for i, GW in enumerate(GWS):
@@ -742,7 +742,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
            OppTeam = OppTeam.replace(" ", "_")
            pos =  ax.transData.transform((GW, PlotData[i]))
            pos = inv.transform(pos)
-           ax2 = fig.add_axes([(pos[0]-size/2), (pos[1]-size/2), size, size]) 
+           ax2 = fig.add_axes([(pos[0]-size/2), (pos[1]-size/2), size, size])
            ax2.axis("off")
            img = mpimg.imread('logos/' + OppTeam + '2.png')
            ax2.imshow(img)
@@ -752,16 +752,16 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
                pos =  ax.transData.transform((GW, PlotData[i]))
                pos = inv.transform(pos)
                if j == 0:
-                   ax2 = fig.add_axes([(pos[0]-size/2-shift), (pos[1]-size/2), size, size]) 
+                   ax2 = fig.add_axes([(pos[0]-size/2-shift), (pos[1]-size/2), size, size])
                elif j ==1:
-                   ax2 = fig.add_axes([(pos[0]-size/2+shift), (pos[1]-size/2), size, size]) 
+                   ax2 = fig.add_axes([(pos[0]-size/2+shift), (pos[1]-size/2), size, size])
                elif j ==2:
                    ax2 = fig.add_axes([(pos[0]-size/2), (pos[1]-size/2+shift), size, size])
                ax2.axis("off")
                img = mpimg.imread('logos/' + OppTeam + '2.png')
                ax2.imshow(img)
-           
-       
+
+
     # save fig
    Team = Team.replace(" ", "_")
    if Attack:
@@ -769,7 +769,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    else:
         plt.savefig('Figures/'+ Team + 'Defens.png',dpi = 300, bbox_inches='tight', facecolor=Background)
 
-    
+
    plt.show()
 
 def MakeTeamPage(Team,base):
@@ -782,7 +782,7 @@ def MakeTeamPage(Team,base):
     Html_file= open(Team2 + ".html","w")
     Html_file.write(page)
     Html_file.close()
-    
+
 
 def git_push(pgr,cm):
     try:
@@ -792,26 +792,4 @@ def git_push(pgr,cm):
         origin = repo.remote(name='origin')
         origin.push()
     except:
-        print('Some error occured while pushing the code')    
-    
-    
-    
-    
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-                                      
-    
-    
+        print('Some error occured while pushing the code')
