@@ -131,7 +131,7 @@ def tau(x,y,lamb,mu,rho):
     else:
         return 1
 
-def phi(t,eps = 0.004):
+def phi(t,eps = 0.0035):
     # Define the weight function
     return np.exp(-eps*t)
 
@@ -545,7 +545,7 @@ def ExpectedGoalsAndCS(ProbMatrix):
     HTCS = probs[0]
     return [HTG, HTCS ,ATG, ATCS]
 
-def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 5):
+def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 4):
     UpcomingFixtures['HTG'] = ""
     UpcomingFixtures['ATG'] = ""
     UpcomingFixtures['HTCS'] = ""
@@ -768,10 +768,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
         plt.savefig('Figures/'+ Team + 'Attack.png',dpi = 300, bbox_inches='tight', facecolor=Background)
    else:
         plt.savefig('Figures/'+ Team + 'Defens.png',dpi = 300, bbox_inches='tight', facecolor=Background)
-
-
-   plt.show()
-
+   
 def MakeTeamPage(Team,base):
     Team2 = Team.replace(" ", "_")
     file = open(base)
