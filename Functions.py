@@ -737,7 +737,9 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    for i, GW in enumerate(GWS):
        OppTeams = Playing(UpcomingFixtures,Team,str(GW))
        OppTeams = OppTeams.split('/')
-       if len(OppTeams) == 1: # only playing one team
+       if OppTeams[0] == '': # Not plating in this gamweek
+           pass
+       elif len(OppTeams) == 1: # only playing one team
            OppTeam = OppTeams[0];
            OppTeam = OppTeam.replace(" ", "_")
            pos =  ax.transData.transform((GW, PlotData[i]))
@@ -768,7 +770,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
         plt.savefig('Figures/'+ Team + 'Attack.png',dpi = 300, bbox_inches='tight', facecolor=Background)
    else:
         plt.savefig('Figures/'+ Team + 'Defens.png',dpi = 300, bbox_inches='tight', facecolor=Background)
-   
+
 def MakeTeamPage(Team,base):
     Team2 = Team.replace(" ", "_")
     file = open(base)
