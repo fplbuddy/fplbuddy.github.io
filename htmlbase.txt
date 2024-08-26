@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>FPL Buddy</title>
+    <title>Table</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type ="text/css" medie="screen" href="style.css">
@@ -14,7 +14,7 @@
 <script src="https://www.kryogenix.org/code/browser/sorttable/sorttable.js"></script>
 <div class="row">
   <div class="column left">
-	<h2> FPL Buddy </h2>
+	<h2> FPL Helper </h2>
 	<br>
     <p> Here are some numbers which will help you beat your mates in Fantasy Premier League. The <b> Expected Goals Scored </b> are exactly what you expect. The number of goals we expect each team to score in any given gameweek. The <b> Defensive Score </b> is a little funky. It is proportional to the probability that each team holds a clean sheet. Note that both of these statistics will get a boost in double gameweeks, so look out for that! Click on teams in the table to get additional team specific data. </p>
 <br>

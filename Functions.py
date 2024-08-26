@@ -43,10 +43,21 @@ def LoadData(files):
     Match_Data["t"] = (date_time_obj - Match_Data["Date"]).astype('timedelta64[D]')
     return Match_Data
 
-def GetUpcomingFixtures(NumGWs = None):
-    fp = urllib.request.urlopen("https://www.fantrax.com/newui/EPL/schedules.go#1")
-    mybytes = fp.read()
-    mystr = mybytes.decode("utf8")
+def GetUpcomingFixtures(NumGWs = None, Fixes = None):
+    site= "https://www.fantrax.com/newui/EPL/schedules.go#1"
+    headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+    }
+
+    # Create a Request object with the URL and the headers
+    req = urllib.request.Request(site, headers=headers)
+
+    # Open the URL with the custom headers
+    fp = urllib.request.urlopen(req)
+
+    # Read and print the content
+    mystr = fp.read().decode('utf-8')
+    fp.close()
 
     GameWeekStrings = mystr.split("Gameweek") # Splitting by gameweek
     GameWeekStrings.pop(0) # remove the first two strings
@@ -71,12 +82,12 @@ def GetUpcomingFixtures(NumGWs = None):
         GW = GW.replace("<", "")
         lastGW = GW
         for i in range(1,len(GW_Teams),2):
-            HT = GW_Teams[i]
-            AT = GW_Teams[i+1]
-            quot = [pos for pos, char in enumerate(HT) if char == '"']
-            HT = HT[quot[0]+1:quot[1]]
+            AT = GW_Teams[i]
+            HT = GW_Teams[i+1]
             quot = [pos for pos, char in enumerate(AT) if char == '"']
             AT = AT[quot[0]+1:quot[1]]
+            quot = [pos for pos, char in enumerate(HT) if char == '"']
+            HT = HT[quot[0]+1:quot[1]]
             add = pd.DataFrame({'GW' : [GW], 'HomeTeam' : [HT], 'AwayTeam' : [AT]})
             Upcoming_Fixtures = Upcoming_Fixtures.append(add, ignore_index = True)
         if NumGWs == None:
@@ -88,10 +99,18 @@ def GetUpcomingFixtures(NumGWs = None):
                 break # Break if we have reached the number of GWs we want
 
 
-    OldNames = ["Tottenham Hotspur", "Norwich City","Manchester City","Manchester United","Leicester City","West Ham United","Leeds United","Newcastle United","Wolverhampton"]
-    NewNames = ["Tottenham", "Norwich","Man City","Man United","Leicester","West Ham","Leeds","Newcastle","Wolves"]
+    OldNames = ["Tottenham Hotspur", "Norwich City","Manchester City","Manchester United","Leicester City","West Ham United","Leeds United","Newcastle United","Wolverhampton", "Nottingham Forest", "Brentford FC", "Brighton and Hove Albion"]
+    NewNames = ["Tottenham", "Norwich","Man City","Man United","Leicester","West Ham","Leeds","Newcastle","Wolves", "Nott'm Forest", "Brentford", "Brighton"]
 
     Upcoming_Fixtures = Upcoming_Fixtures.replace(OldNames, NewNames)
+
+    if Fixes is not None:
+        Before = Fixes['Before']
+        After = Fixes['After']
+        for b, a in zip(Before, After):
+            condition = (Upcoming_Fixtures['GW'] == b['GW']) & (Upcoming_Fixtures['HomeTeam'] == b['HomeTeam']) & (Upcoming_Fixtures['AwayTeam'] == b['AwayTeam'])
+            Upcoming_Fixtures.loc[condition, 'GW'] = a['GW']
+
     return Upcoming_Fixtures
 
 def Playing(UpcomingFixtures,Team,GW):
@@ -131,7 +150,7 @@ def tau(x,y,lamb,mu,rho):
     else:
         return 1
 
-def phi(t,eps = 0.0035):
+def phi(t,eps = 0.002):
     # Define the weight function
     return np.exp(-eps*t)
 
@@ -545,7 +564,7 @@ def ExpectedGoalsAndCS(ProbMatrix):
     HTCS = probs[0]
     return [HTG, HTCS ,ATG, ATCS]
 
-def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 4):
+def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 5):
     UpcomingFixtures['HTG'] = ""
     UpcomingFixtures['ATG'] = ""
     UpcomingFixtures['HTCS'] = ""
@@ -666,7 +685,11 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
             '#132257',
             '#ED2127',
             '#7A263A',
-            '#FDB913']
+            '#FDB913',
+            '#DA291C',
+            '#3a64a3',
+            '#000000',
+            '#e53233']
    Teams = ['Arsenal',
             'Aston Villa',
             'Brentford',
@@ -686,7 +709,11 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
             'Tottenham',
             'Watford',
             'West Ham',
-            'Wolves']
+            'Wolves',
+            'Bournemouth',
+            'Ipswich',
+            'Fulham',
+            "Nott'm Forest"]
    Teamid = Teams.index(Team)
    col = TeamCols[Teamid]
    # Inputs
@@ -737,9 +764,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    for i, GW in enumerate(GWS):
        OppTeams = Playing(UpcomingFixtures,Team,str(GW))
        OppTeams = OppTeams.split('/')
-       if OppTeams[0] == '': # Not plating in this gamweek
-           pass
-       elif len(OppTeams) == 1: # only playing one team
+       if len(OppTeams) == 1: # only playing one team
            OppTeam = OppTeams[0];
            OppTeam = OppTeam.replace(" ", "_")
            pos =  ax.transData.transform((GW, PlotData[i]))
@@ -771,17 +796,20 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    else:
         plt.savefig('Figures/'+ Team + 'Defens.png',dpi = 300, bbox_inches='tight', facecolor=Background)
 
+
+
+
+   plt.show()
+
 def MakeTeamPage(Team,base):
-    Team2 = Team.replace(" ", "_")
+    Team = Team.replace(" ", "_")
     file = open(base)
     page = file.read()
     file.close()
-    page = page.replace("TeamStrbefore", Team)
-    page = page.replace("TeamStr", Team2)
-    Html_file= open(Team2 + ".html","w")
+    page = page.replace("TeamStr", Team)
+    Html_file= open(Team + ".html","w")
     Html_file.write(page)
     Html_file.close()
-
 
 def git_push(pgr,cm):
 #    try:

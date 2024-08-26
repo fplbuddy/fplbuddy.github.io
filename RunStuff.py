@@ -8,20 +8,32 @@ Created on Fri Sep  3 14:23:51 2021
 
 import Functions as funcs
 
-url = 'https://www.football-data.co.uk/mmz4281/2122/E0.csv' 
-funcs.GetData(url,'Data/21_22.csv')
-url = 'https://www.football-data.co.uk/mmz4281/2021/E0.csv'
-funcs.GetData(url,'Data/20_21.csv')
+files = ['Data/23_24.csv', 'Data/24_25.csv']
 
-files = ['Data/21_22.csv', 'Data/20_21.csv']
+url = 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' 
+funcs.GetData(url,files[1])
+url = 'https://www.football-data.co.uk/mmz4281/2324/E0.csv'
+funcs.GetData(url,files[0])
+
 Match_Data = funcs.LoadData(files)
-Match_Data= Match_Data.replace(['West Brom', 'Sheffield United', 'Fulham'],['Norwich', 'Watford', 'Brentford'])
+Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Leicester', 'Ipswich', 'Southampton'])
 Teams = sorted(list(set(Match_Data['HomeTeam'])))
 Res = funcs.Optimise2(Match_Data, Teams)
 
-UpcomingFixtures = funcs.GetUpcomingFixtures(5)
+Fixes = dict()
+Fixes["Before"] = [ {"GW": '8', "HomeTeam": "Leicester", "AwayTeam": "Nott'm Forest" } ]
+Fixes["After"] = [ {"GW": '9', "HomeTeam": "Leicester", "AwayTeam": "Nott'm Forest"  } ]
+
+UpcomingFixtures = funcs.GetUpcomingFixtures(5, Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
+
+AttackingData.to_csv('Data/AttackingData.csv', index = False)
+DefensiveData.to_csv('Data/DefensiveData .csv', index = False)
+
+#hej = funcs.ProbMatrix("Man United", "Man City", Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
+#ehhh = funcs.ExpectedGoalsAndCS(hej)
+#jev = funcs.Prob(hej, "Man United", "Man City")
 
 file = open("htmlbase.txt")
 thestring = file.read()
@@ -38,7 +50,7 @@ Html_file.write(thestring)
 Html_file.close()
 
 # Make figures
-UpcomingFixtures = funcs.GetUpcomingFixtures()
+UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
 for Team in Teams:
@@ -49,9 +61,5 @@ for Team in Teams:
 for Team in Teams:
     funcs.MakeTeamPage(Team,"TeamBase.txt")
     
-    
-funcs.git_push(r'/Users/philipwinchester/Sites/fplbuddy.github.io/.git','Auto')
-
-    
         
-
+funcs.git_push(r'/Users/philipwinchester/Sites/fplbuddy.github.io/.git','Auto')
