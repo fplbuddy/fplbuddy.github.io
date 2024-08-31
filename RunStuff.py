@@ -7,6 +7,8 @@ Created on Fri Sep  3 14:23:51 2021
 """
 
 import Functions as funcs
+import os
+os.chdir("/Users/philipwinchester/Sites/fplbuddy.github.io")
 
 files = ['Data/23_24.csv', 'Data/24_25.csv']
 
