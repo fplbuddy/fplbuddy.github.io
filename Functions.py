@@ -150,7 +150,7 @@ def tau(x,y,lamb,mu,rho):
     else:
         return 1
 
-def phi(t,eps = 0.002):
+def phi(t,eps = 0.0025):
     # Define the weight function
     return np.exp(-eps*t)
 
@@ -798,10 +798,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    else:
         plt.savefig('Figures/'+ Team + 'Defens.png',dpi = 300, bbox_inches='tight', facecolor=Background)
 
-
-
-
-   plt.show()
+   plt.close('all')
 
 def MakeTeamPage(Team,base):
     Team = Team.replace(" ", "_")
