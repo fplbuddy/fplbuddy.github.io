@@ -57,6 +57,7 @@ Html_file.close()
 UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
+funcs.GKData(DefensiveData, Teams)
 for Team in Teams:
     funcs.Makeplot(DefensiveData,UpcomingFixtures,Team,False)
     funcs.Makeplot(AttackingData,UpcomingFixtures,Team,True)

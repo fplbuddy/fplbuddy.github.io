@@ -564,6 +564,38 @@ def ExpectedGoalsAndCS(ProbMatrix):
     HTCS = probs[0]
     return [HTG, HTCS ,ATG, ATCS]
 
+def GKData(DefensiveData, Teams):
+    for matches in range(1,len(DefensiveData.columns)-1):
+        Team1_list = []
+        Team2_list = []
+        Team1_score_list = []
+        Team2_score_list = []
+        Total_score_list = []
+        
+        count = 0
+        for Team1 in Teams:
+            count += 1 
+            for Team2 in Teams[count:]:
+                Team1_scores = np.array(DefensiveData[DefensiveData["Teams"] == Team1].iloc[0].tolist()[1:matches+1])
+                Team2_scores = np.array(DefensiveData[DefensiveData["Teams"] == Team2].iloc[0].tolist()[1:matches+1])
+                
+                Team1_list.append(Team1)
+                Team2_list.append(Team2)
+                Team1_score_list.append( round(np.sum(Team1_scores),2) )
+                Team2_score_list.append( round(np.sum(Team2_scores),2) )
+                Total_score_list.append( round(np.sum(np.maximum(Team1_scores, Team2_scores)),2) )
+                
+        data = {
+                "Team1": Team1_list, 
+                "Team2": Team2_list, 
+                "Team1 Score": Team1_score_list, 
+                "Team2 Score": Team2_score_list, 
+                "Total Score": Total_score_list, 
+                }
+        df = pd.DataFrame(data)
+        
+        df.to_csv('Data/GK_' + str(matches) + '.csv', index = False)
+
 def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 5):
     UpcomingFixtures['HTG'] = ""
     UpcomingFixtures['ATG'] = ""
