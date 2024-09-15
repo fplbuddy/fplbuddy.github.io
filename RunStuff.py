@@ -33,11 +33,7 @@ UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamm
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
 
 AttackingData.to_csv('Data/AttackingData.csv', index = False)
-DefensiveData.to_csv('Data/DefensiveData .csv', index = False)
-
-#hej = funcs.ProbMatrix("Man United", "Man City", Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
-#ehhh = funcs.ExpectedGoalsAndCS(hej)
-#jev = funcs.Prob(hej, "Man United", "Man City")
+DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
 
 file = open("htmlbase.txt")
 thestring = file.read()

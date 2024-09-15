@@ -15,6 +15,8 @@ import string
 import matplotlib.pyplot as plt
 import matplotlib.image as mpimg
 import math
+import glob
+import os
 from git import Repo
 
 def GetData(url,saveas):
@@ -565,6 +567,9 @@ def ExpectedGoalsAndCS(ProbMatrix):
     return [HTG, HTCS ,ATG, ATCS]
 
 def GKData(DefensiveData, Teams):
+    for f in glob.glob("Data/GK*"):
+        os.remove(f)
+    
     for matches in range(1,len(DefensiveData.columns)-1):
         Team1_list = []
         Team2_list = []
