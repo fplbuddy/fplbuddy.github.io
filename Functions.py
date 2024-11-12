@@ -601,7 +601,7 @@ def GKData(DefensiveData, Teams):
 
         df.to_csv('Data/GK_' + str(matches) + '.csv', index = False)
 
-def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 4):
+def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 5):
     UpcomingFixtures['HTG'] = ""
     UpcomingFixtures['ATG'] = ""
     UpcomingFixtures['HTCS'] = ""
