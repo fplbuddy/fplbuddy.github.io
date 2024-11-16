@@ -8,6 +8,7 @@ Created on Fri Sep  3 14:23:51 2021
 
 import Functions as funcs
 import os
+import datetime
 os.chdir("/Users/philipwinchester/Sites/fplbuddy.github.io")
 
 files = ['Data/23_24.csv', 'Data/24_25.csv']
@@ -38,21 +39,74 @@ DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
 file = open("htmlbase.txt")
 thestring = file.read()
 file.close()
-# Fix Gameweeks
+'''# Fix Gameweeks
 thestring = funcs.FixGWsAndTime(UpcomingFixtures,thestring)
 # Make content1
 thestring = funcs.MakeContent(thestring,Teams,UpcomingFixtures,AttackingData,"content1","contentbase.txt")
 # Make content 2
 thestring = funcs.MakeContent(thestring,Teams,UpcomingFixtures,DefensiveData,"content2","contentbase.txt")
 
-Html_file= open("index.html","w")
+Html_file = open("index.html", "w")
 Html_file.write(thestring)
-Html_file.close()
+Html_file.close()'''
+
+
+
+
 
 # Make figures
 UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
+
+# Put data in the .js file
+file = open("tabledata.txt")
+Data = file.read()
+file.close
+
+DefensfiveDataString = ''
+AttackingDataString = ''
+
+for Team in Teams:
+    Team_Underscore = Team.replace(" ", "_")
+    Dinst = DefensiveData[DefensiveData["Teams"] == Team].values.flatten().tolist()
+    Dinst = str(Dinst[1:-1])
+
+    Ainst = AttackingData[AttackingData["Teams"] == Team].values.flatten().tolist()
+    Ainst = str(Ainst[1:-1])
+
+    Dinst = f'"{Team}": {{ scores: {Dinst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
+    DefensfiveDataString += Dinst
+
+    Ainst = f'"{Team}": {{ scores: {Ainst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
+    AttackingDataString += Ainst
+
+Data = Data.replace( "AttackingData", AttackingDataString )
+Data = Data.replace( "DefensiveData", DefensfiveDataString )
+
+GWS = list(set(UpcomingFixtures['GW']))
+GWS.sort(key=float)
+Data = Data.replace( "StartGWNumber", str(GWS[0]))
+
+Html_file = open("tabledata.js", "w")
+Html_file.write(Data)
+Html_file.close()
+
+now = datetime.datetime.today().strftime('%d-%b-%Y')
+if now[0] == '0':
+    day = now[1]
+else:
+    day = now[0:2]
+thestring = thestring.replace('Time',day+ ' ' + now[3:6] + ' ' + now[7:13])
+MaxSliderValue = min( 10, len(GWS) )
+StartSliderValue = min( 5, MaxSliderValue )
+thestring = thestring.replace('MaxSliderValue', str(MaxSliderValue))
+thestring = thestring.replace('StartSliderValue', str(StartSliderValue))
+
+Html_file = open("index.html", "w")
+Html_file.write(thestring)
+Html_file.close()
+
 funcs.GKData(DefensiveData, Teams)
 for Team in Teams:
     funcs.Makeplot(DefensiveData,UpcomingFixtures,Team,False)
