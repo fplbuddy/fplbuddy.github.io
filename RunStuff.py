@@ -36,25 +36,6 @@ AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
 AttackingData.to_csv('Data/AttackingData.csv', index = False)
 DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
 
-file = open("htmlbase.txt")
-thestring = file.read()
-file.close()
-'''# Fix Gameweeks
-thestring = funcs.FixGWsAndTime(UpcomingFixtures,thestring)
-# Make content1
-thestring = funcs.MakeContent(thestring,Teams,UpcomingFixtures,AttackingData,"content1","contentbase.txt")
-# Make content 2
-thestring = funcs.MakeContent(thestring,Teams,UpcomingFixtures,DefensiveData,"content2","contentbase.txt")
-
-Html_file = open("index.html", "w")
-Html_file.write(thestring)
-Html_file.close()'''
-
-
-
-
-
-# Make figures
 UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
@@ -91,6 +72,10 @@ Data = Data.replace( "StartGWNumber", str(GWS[0]))
 Html_file = open("tabledata.js", "w")
 Html_file.write(Data)
 Html_file.close()
+
+file = open("htmlbase.txt")
+thestring = file.read()
+file.close()
 
 now = datetime.datetime.today().strftime('%d-%b-%Y')
 if now[0] == '0':
