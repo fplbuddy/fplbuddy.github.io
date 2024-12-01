@@ -19,7 +19,7 @@ url = 'https://www.football-data.co.uk/mmz4281/2324/E0.csv'
 funcs.GetData(url,files[0])
 
 Match_Data = funcs.LoadData(files)
-Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Leicester', 'Ipswich', 'Southampton'])
+Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Ipswich', 'Leicester', 'Southampton'])
 Teams = sorted(list(set(Match_Data['HomeTeam'])))
 Res = funcs.Optimise2(Match_Data, Teams)
 
