@@ -11,12 +11,10 @@ import os
 import datetime
 os.chdir("/Users/philipwinchester/Sites/fplbuddy.github.io")
 
-files = ['Data/23_24.csv', 'Data/24_25.csv']
-
-url = 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' 
-funcs.GetData(url,files[1])
-url = 'https://www.football-data.co.uk/mmz4281/2324/E0.csv'
-funcs.GetData(url,files[0])
+files = [ 'Data/23_24.csv', 'Data/24_25.csv']
+urls = [ 'https://www.football-data.co.uk/mmz4281/2324/E0.csv', 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' ]
+for url, file in zip(urls, files):
+    funcs.GetData(url, file)
 
 Match_Data = funcs.LoadData(files)
 Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Ipswich', 'Leicester', 'Southampton'])
