@@ -17,10 +17,11 @@
             <h2>FPL Buddy</h2>
             <br>
             <p> <b>Expected Goals Scored</b> and <b>Defensive Score</b>,
-            proportional to the probability of clean sheet, for Premier League teams.
+            proportional to the probability of clean sheet, for Premier League teams in upcoming gameweeks.
             Team specific data available following links on each team. </p>
           <br>
-          <p> The data is calculated using the <a href="https://philipwinchester.github.io/dixon-coles-model/">Dixon Coles Model</a>.  </p>
+          <p> The data is calculated using the <a href="https://philipwinchester.github.io/dixon-coles-model/">Dixon Coles Model</a>,
+          with <a href="Parameters.html">these</a> parameter values.  </p>
           <br>
           <p> Last updated: Time  </p>
           <br>
