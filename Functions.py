@@ -623,14 +623,14 @@ def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling 
         UpcomingFixtures['ATCS'][index] = ATCS*scaling
 
         if LS[row['HomeTeam']] - LS[row['AwayTeam']] >= 5:
-            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + HW*(const.ManagerWin + const.ManagerWinBonus)
-            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
+            UpcomingFixtures['HMP'][index] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + HW*(const.ManagerWin + const.ManagerWinBonus)
+            UpcomingFixtures['AMP'][index] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
         elif LS[row['HomeTeam']] - LS[row['AwayTeam']] <= -5:
-            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
-            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + AW*(const.ManagerWin + const.ManagerWinBonus)
+            UpcomingFixtures['HMP'][index] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
+            UpcomingFixtures['AMP'][index] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + AW*(const.ManagerWin + const.ManagerWinBonus)
         else:
-            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
-            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
+            UpcomingFixtures['HMP'][index] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
+            UpcomingFixtures['AMP'][index] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
 
     return  UpcomingFixtures
 
@@ -642,7 +642,6 @@ def GetTables(UpcomingFixtures,Teams):
     AttackingData = pd.DataFrame(data=AttackingData)
     for GW in GWS:
         AttackingData[GW] = 0.0
-    AttackingData['Total'] = 0.0
     DefensiveData = AttackingData.copy()
     ManagerData = AttackingData.copy()
     # Adding the data we want
@@ -780,7 +779,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
 
    PlotData = Data[Data['Teams'] == Team].values.tolist()
    PlotData = PlotData[0]
-   PlotData = PlotData[1:len(PlotData)-1]
+   PlotData = PlotData[1:len(PlotData)]
    GWS = list(set(UpcomingFixtures['GW']))
    GWS = [int(i) for i in GWS]
    GWS = sorted(GWS)
