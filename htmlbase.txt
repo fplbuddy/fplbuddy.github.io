@@ -15,7 +15,8 @@
     <div class="row">
         <div class="column left">
             <h2>FPL Buddy</h2>
-            <p> <b> Expected Goals Scored </b> and <b> Defensive Score </b>,
+            <br>
+            <p> <b>Expected Goals Scored</b> and <b>Defensive Score</b>,
             proportional to the probability of clean sheet, for Premier League teams.
             Team specific data available following links on each team. </p>
           <br>
