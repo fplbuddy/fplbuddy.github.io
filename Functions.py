@@ -702,7 +702,35 @@ def AdjustManagerTable( ManagerData, Save = True):
         new_df.to_csv("Data/ManagerData.csv", index=False)
     else:
         return new_df
+    
+def MakeDataJS(Teams, Res,DefensiveData, AttackingData):
+    DefensfiveDataString = ''
+    AttackingDataString = ''
+    DCDataString = ''
 
+    for Team in Teams:
+        Team_Underscore = Team.replace(" ", "_")
+
+        Dinst = DefensiveData[DefensiveData["Teams"] == Team].values.flatten().tolist()
+        Dinst = str(Dinst[1:])
+
+        Ainst = AttackingData[AttackingData["Teams"] == Team].values.flatten().tolist()
+        Ainst = str(Ainst[1:])
+
+        DCinst = Res[DefensiveData["Teams"] == Team].values.flatten().tolist()
+        DCinst = [round(num, 2) if isinstance(num, (int, float)) else num for num in DCinst]
+        DCinst = str(DCinst[1:-2])
+
+        Dinst = f'"{Team}": {{ scores: {Dinst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
+        DefensfiveDataString += Dinst
+
+        Ainst = f'"{Team}": {{ scores: {Ainst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
+        AttackingDataString += Ainst
+
+        DCinst = f'"{Team}": {{ scores: {DCinst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
+        DCDataString += DCinst
+
+    return DefensfiveDataString, AttackingDataString, DCDataString
 
 def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
     # NGWIT is the number if gameweeks we have in theory

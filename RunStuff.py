@@ -40,31 +40,7 @@ file = open("parameterdata.txt")
 DCData = file.read()
 file.close
 
-DefensfiveDataString = ''
-AttackingDataString = ''
-DCDataString = ''
-
-for Team in Teams:
-    Team_Underscore = Team.replace(" ", "_")
-
-    Dinst = DefensiveData[DefensiveData["Teams"] == Team].values.flatten().tolist()
-    Dinst = str(Dinst[1:])
-
-    Ainst = AttackingData[AttackingData["Teams"] == Team].values.flatten().tolist()
-    Ainst = str(Ainst[1:])
-
-    DCinst = Res[DefensiveData["Teams"] == Team].values.flatten().tolist()
-    DCinst = [round(num, 2) if isinstance(num, (int, float)) else num for num in DCinst]
-    DCinst = str(DCinst[1:-2])
-
-    Dinst = f'"{Team}": {{ scores: {Dinst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
-    DefensfiveDataString += Dinst
-
-    Ainst = f'"{Team}": {{ scores: {Ainst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
-    AttackingDataString += Ainst
-
-    DCinst = f'"{Team}": {{ scores: {DCinst}, logo: "logos/{Team_Underscore}2.png", page: "{Team_Underscore}.html" }},\n'
-    DCDataString += DCinst
+DefensfiveDataString, AttackingDataString, DCDataString = funcs.MakeDataJS(Teams, Res,DefensiveData, AttackingData)
 
 Data = Data.replace( "AttackingData", AttackingDataString )
 Data = Data.replace( "DefensiveData", DefensfiveDataString )
@@ -106,9 +82,7 @@ for Team in Teams:
     funcs.Makeplot(DefensiveData,UpcomingFixtures,Team,False)
     funcs.Makeplot(AttackingData,UpcomingFixtures,Team,True)
     
-    
 for Team in Teams:
     funcs.MakeTeamPage(Team,"TeamBase.txt")
     
-        
 funcs.git_push(r'/Users/philipwinchester/Sites/fplbuddy.github.io/.git','Auto')
