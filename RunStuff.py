@@ -26,18 +26,10 @@ Fixes["After"] = [ {"GW": '9', "HomeTeam": "Leicester", "AwayTeam": "Nott'm Fore
 Fixes["Before"] = [ {"GW": '12', "HomeTeam": "Southampton", "AwayTeam": "Brighton" } ]
 Fixes["After"] = [ {"GW": '13', "HomeTeam": "Southampton", "AwayTeam": "Brighton"  } ]
 
-#UpcomingFixtures = funcs.GetUpcomingFixtures(5, Fixes)
-#UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
-#AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
-
-#AttackingData.to_csv('Data/AttackingData.csv', index = False)
-#DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
-
-# Dont think above is needed
-
 UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData, ManagerData = funcs.GetTables(UpcomingFixtures,Teams)
+funcs.AdjustManagerTable( ManagerData )
 
 # Put data in the .js file
 file = open("tabledata.txt")

@@ -669,6 +669,41 @@ def GetTables(UpcomingFixtures,Teams):
 
     return AttackingData,DefensiveData,ManagerData
 
+def AdjustManagerTable( ManagerData, Save = True):
+    # Start at the right GW
+    columns_to_remove = [str(i) for i in range(1, const.ManagerGWStart)]
+    ManagerData = ManagerData.drop(columns=columns_to_remove, errors='ignore')
+
+    # Define the new DataFrame
+    result = []
+
+    # Iterate over rows to create the desired structure
+    for index, row in ManagerData.iterrows():
+        for start_gw in range(const.ManagerGWStart, const.TotalGWs+1):  # Adjust the range as needed
+            # Get the scores for the consecutive gameweeks
+            scores = [row.get(str(start_gw + i), None) for i in range(const.ManagerGWs)]
+
+            # Calculate total score (sum of the selected scores)
+            total_score = round(sum([score for score in scores if score is not None]),2)
+
+            # Prepare the new row
+            new_row = {
+                "Team": row["Teams"],
+                "From GW": start_gw,
+                **{f"GW {i+1} Score": scores[i] for i in range(const.ManagerGWs)},
+                "Total Score": total_score
+            }
+            result.append(new_row)
+
+    # Create the final DataFrame
+    new_df = pd.DataFrame(result)
+
+    if Save:
+        new_df.to_csv("Data/ManagerData.csv", index=False)
+    else:
+        return new_df
+
+
 def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
     # NGWIT is the number if gameweeks we have in theory
     GWS = list(set(UpcomingFixtures['GW']))
@@ -689,7 +724,6 @@ def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
         day = now[0:2]
     thestring = thestring.replace('Time',day+ ' ' + now[3:6] + ' ' + now[7:13])
     return thestring
-
 
 def MakeContent(thestring,Teams,UpcomingFixtures,Data,rep,base,NGWIT=5):
     # Data: Where we take data from
