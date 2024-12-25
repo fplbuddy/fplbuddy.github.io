@@ -18,6 +18,7 @@ import math
 import glob
 import os
 from git import Repo
+import constants as const
 
 def GetData(url,saveas):
     # url: url where data is
@@ -555,16 +556,20 @@ def ProbMatrix(HomeTeam, AwayTeam, Parameters, gamma, rho, Teams,Max = 10):
 
       return(Result)
 
-def ExpectedGoalsAndCS(ProbMatrix):
-    # Calculate expected goals HT
-    probs = np.sum(ProbMatrix,axis=1)
-    HTG = np.inner(probs,np.arange(len(probs)))
-    ATCS = probs[0]
-    # Calculate expected goals AT
-    probs = np.sum(ProbMatrix,axis=0)
-    ATG = np.inner(probs,np.arange(len(probs)))
-    HTCS = probs[0]
-    return [HTG, HTCS ,ATG, ATCS]
+def ExpectedGoalsAndCSOutcome(ProbMatrix):
+  D = np.trace(ProbMatrix)
+  AW = np.sum(np.triu(ProbMatrix, k = 1))
+  HW = np.sum(np.tril(ProbMatrix, k = -1))
+
+  # Calculate expected goals HT
+  probs = np.sum(ProbMatrix,axis=1)
+  HTG = np.inner(probs,np.arange(len(probs)))
+  ATCS = probs[0]
+  # Calculate expected goals AT
+  probs = np.sum(ProbMatrix,axis=0)
+  ATG = np.inner(probs,np.arange(len(probs)))
+  HTCS = probs[0]
+  return [HTG, HTCS ,ATG, ATCS, HW, AW, D]
 
 def GKData(DefensiveData, Teams):
     for f in glob.glob("Data/GK*"):
@@ -606,13 +611,27 @@ def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling 
     UpcomingFixtures['ATG'] = ""
     UpcomingFixtures['HTCS'] = ""
     UpcomingFixtures['ATCS'] = ""
+    UpcomingFixtures['HMP'] = "" 
+    UpcomingFixtures['AMP'] = "" 
+    LS = LeagueStanding()
     for index, row in UpcomingFixtures.iterrows():
         PMatrix = ProbMatrix(row['HomeTeam'], row['AwayTeam'], Parameters, gamma, rho, Teams)
-        [HTG, HTCS ,ATG, ATCS] = ExpectedGoalsAndCS(PMatrix)
+        [HTG, HTCS ,ATG, ATCS, HW, AW, D] = ExpectedGoalsAndCSOutcome(PMatrix)
         UpcomingFixtures['HTG'][index] = HTG
         UpcomingFixtures['ATG'][index] = ATG
         UpcomingFixtures['HTCS'][index] = HTCS*scaling
         UpcomingFixtures['ATCS'][index] = ATCS*scaling
+
+        if LS[row['HomeTeam']] - LS[row['AwayTeam']] >= 5:
+            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + HW*(const.ManagerWin + const.ManagerWinBonus)
+            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
+        elif LS[row['HomeTeam']] - LS[row['AwayTeam']] <= -5:
+            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
+            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + AW*(const.ManagerWin + const.ManagerWinBonus)
+        else:
+            UpcomingFixtures['HMP'] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*const.ManagerDraw + HW*const.ManagerWin
+            UpcomingFixtures['AMP'] = ATCS*const.ManagerCS + ATG*const.ManagerGoal + D*const.ManagerDraw + AW*const.ManagerWin
+
     return  UpcomingFixtures
 
 def GetTables(UpcomingFixtures,Teams):
@@ -625,6 +644,7 @@ def GetTables(UpcomingFixtures,Teams):
         AttackingData[GW] = 0.0
     AttackingData['Total'] = 0.0
     DefensiveData = AttackingData.copy()
+    ManagerData = AttackingData.copy()
     # Adding the data we want
     for GW in GWS:
         GWData = UpcomingFixtures[UpcomingFixtures['GW']==GW]
@@ -632,24 +652,23 @@ def GetTables(UpcomingFixtures,Teams):
         for TeamIndex,Team in enumerate(Teams):
             G = 0
             C = 0
+            M = 0
             # Search HomeTeam First
             HTData = GWData[GWData['HomeTeam'] == Team]
             G += sum(HTData['HTG'])
             C +=sum(HTData['HTCS'])
+            M +=sum(HTData['HMP'])
             # Now do AwayTeam
             ATData = GWData[GWData['AwayTeam'] == Team]
             G += sum(ATData['ATG'])
             C +=sum(ATData['ATCS'])
+            M +=sum(ATData['AMP'])
             # Now add it data
             AttackingData[GW][TeamIndex] = round(G,2)
             DefensiveData[GW][TeamIndex] = round(C,2)
-            AttackingData['Total'][TeamIndex] += round(G,2)
-            DefensiveData['Total'][TeamIndex] += round(C,2)
-    # round total
-    AttackingData['Total'] = AttackingData['Total'].apply(lambda x: round(x,2))
-    DefensiveData['Total'] = DefensiveData['Total'].apply(lambda x: round(x,2))
+            ManagerData[GW][TeamIndex] = round(M,2)
 
-    return AttackingData,DefensiveData
+    return AttackingData,DefensiveData,ManagerData
 
 def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
     # NGWIT is the number if gameweeks we have in theory
@@ -847,6 +866,31 @@ def MakeTeamPage(Team,base):
     Html_file= open(Team + ".html","w")
     Html_file.write(page)
     Html_file.close()
+
+def LeagueStanding():
+  # Define the API endpoint and headers
+  url = const.API_url
+  headers = {
+      "X-Auth-Token": const.X_Auth_Token  # Replace with your actual API token
+  }
+
+  # Fetch the data
+  response = requests.get(url, headers=headers)
+
+  data = response.json()
+  standings = data.get('standings', [])[0].get('table', [])
+
+  TeamPositions = dict()
+  for inst in standings:
+      team = inst[ 'team' ][ 'shortName' ]
+      for new_team in const.team_name_map:
+          if team in const.team_name_map[new_team]:
+              team = new_team
+              break
+
+      TeamPositions[ team ] = inst[ 'position' ]
+  
+  return( TeamPositions )
 
 def git_push(pgr,cm):
 #    try:

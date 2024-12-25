@@ -9,14 +9,13 @@ Created on Fri Sep  3 14:23:51 2021
 import Functions as funcs
 import os
 import datetime
+import constants as const
 os.chdir("/Users/philipwinchester/Sites/fplbuddy.github.io")
 
-files = [ 'Data/23_24.csv', 'Data/24_25.csv']
-urls = [ 'https://www.football-data.co.uk/mmz4281/2324/E0.csv', 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' ]
-for url, file in zip(urls, files):
+for url, file in zip(const.urls, const.files):
     funcs.GetData(url, file)
 
-Match_Data = funcs.LoadData(files)
+Match_Data = funcs.LoadData(const.files)
 Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Ipswich', 'Leicester', 'Southampton'])
 Teams = sorted(list(set(Match_Data['HomeTeam'])))
 Res = funcs.Optimise2(Match_Data, Teams)
@@ -27,16 +26,18 @@ Fixes["After"] = [ {"GW": '9', "HomeTeam": "Leicester", "AwayTeam": "Nott'm Fore
 Fixes["Before"] = [ {"GW": '12', "HomeTeam": "Southampton", "AwayTeam": "Brighton" } ]
 Fixes["After"] = [ {"GW": '13', "HomeTeam": "Southampton", "AwayTeam": "Brighton"  } ]
 
-UpcomingFixtures = funcs.GetUpcomingFixtures(5, Fixes)
-UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
-AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
+#UpcomingFixtures = funcs.GetUpcomingFixtures(5, Fixes)
+#UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
+#AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
 
-AttackingData.to_csv('Data/AttackingData.csv', index = False)
-DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
+#AttackingData.to_csv('Data/AttackingData.csv', index = False)
+#DefensiveData.to_csv('Data/DefensiveData.csv', index = False)
+
+# Dont think above is needed
 
 UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
-AttackingData,DefensiveData = funcs.GetTables(UpcomingFixtures,Teams)
+AttackingData,DefensiveData, ManagerData = funcs.GetTables(UpcomingFixtures,Teams)
 
 # Put data in the .js file
 file = open("tabledata.txt")

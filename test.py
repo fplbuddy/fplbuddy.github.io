@@ -1,22 +1,34 @@
-import requests
+import Functions as funcs
 
-# Define the API endpoint and headers
-url = "https://api.football-data.org/v4/competitions/PL/standings"
-headers = {
-    "X-Auth-Token": "4a28f5bd89ed4b91b21eff78c72038fd"  # Replace with your actual API token
-}
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Fri Sep  3 14:23:51 2021
 
-# Fetch the data
-response = requests.get(url, headers=headers)
+@author: philipwinchester
+"""
 
-if response.status_code == 200:
-    data = response.json()
-    standings = data.get('standings', [])[0].get('table', [])
-    
-    # Print the table
-    print(f"{'Position':<10}{'Team':<30}{'Points':<10}")
-    print("-" * 50)
-    for team in standings:
-        print(f"{team['position']:<10}{team['team']['name']:<30}{team['points']:<10}")
-else:
-    print("Failed to fetch data:", response.status_code, response.text)
+import Functions as funcs
+import os
+import datetime
+import constants as const
+import numpy as np
+os.chdir("/Users/philipwinchester/Sites/fplbuddy.github.io")
+
+for url, file in zip(const.urls, const.files):
+    funcs.GetData(url, file)
+
+Match_Data = funcs.LoadData(const.files)
+Match_Data= Match_Data.replace(['Luton', 'Burnley', 'Sheffield United'],['Ipswich', 'Leicester', 'Southampton'])
+Teams = sorted(list(set(Match_Data['HomeTeam'])))
+Res = funcs.Optimise2(Match_Data, Teams)
+
+array = funcs.ProbMatrix("Arsenal", "Wolves",Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
+
+D = np.trace(array)
+AW = np.sum(np.triu(array, k = 1))
+HW = np.sum(np.tril(array, k = -1))
+
+print(D)
+print(upper_triangular_sum)
+print(lower_triangular_sum)
