@@ -1,0 +1,39 @@
+const data = {
+DCData
+};
+
+function updateTable() {
+    const header = document.getElementById("ParameterHeader");
+    const body = document.getElementById("ParameterBody");
+
+    // Re-create the header row
+    header.innerHTML = `<th>Club</th>`;
+    header.innerHTML += `<th>Attacking Param</th>`
+    header.innerHTML += `<th>Defensive Param</th>`
+
+    // Re-create the body rows
+    body.innerHTML = "";
+    for (const team in data) {
+        const row = document.createElement("tr");
+
+        // Team cell with clickable link and hover effect
+        const teamCell = document.createElement("td");
+        teamCell.innerHTML = `
+          <a style="text-decoration:none" href="${data[team].page}">
+              <span style="float: left"><img class="logo" src="${data[team].logo}"> </span>
+                  &nbsp; ${team}
+          </a>`;
+        row.appendChild(teamCell);
+
+        // Individual gameweek goals
+        for (let i = 0; i < 2; i++) {
+            row.innerHTML += `<td>${data[team].scores[i].toFixed(2)}</td>`;
+        }
+
+        body.appendChild(row);
+    }
+
+    sorttable.makeSortable(document.getElementById("ParameterTable"));
+}
+
+document.addEventListener("DOMContentLoaded", () => updateTable());
