@@ -94,11 +94,11 @@ def GetUpcomingFixtures(NumGWs = None, Fixes = None):
             add = pd.DataFrame({'GW' : [GW], 'HomeTeam' : [HT], 'AwayTeam' : [AT]})
             Upcoming_Fixtures = Upcoming_Fixtures.append(add, ignore_index = True)
         if NumGWs == None:
-            if lastGW == "38":
+            if lastGW == str(const.TotalGWs):
                 break # Break if we have gotten down to 38
         else:
             count += 1
-            if count == NumGWs or lastGW == "38": # Will have to update the content and how we compile it once we get down to later gameweeks as well
+            if count == NumGWs or lastGW == str(const.TotalGWs): # Will have to update the content and how we compile it once we get down to later gameweeks as well
                 break # Break if we have reached the number of GWs we want
 
 
@@ -831,7 +831,9 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
     #plt.ylim(50, 750)
     #xtick_location = df.index.tolist()[::12]
     #xtick_labels = [x[-4:] for x in df.date.tolist()[::12]]
-   plt.xticks(rotation=0, fontsize=24, horizontalalignment='center', color = text_color,fontname = "Radikal")
+   step = math.ceil( len(GWS) / 10 )
+   xt = list(range(min(GWS), max(GWS) + 1, step))
+   plt.xticks(xt, rotation=0, fontsize=24, horizontalalignment='center', color = text_color,fontname = "Radikal")
    plt.yticks(fontsize=24, color = text_color,fontname = "Radikal")
     #plt.title("Air Passengers Traffic (1949 - 1969)", fontsize=22)
    #plt.grid(axis='both', alpha=.3)
