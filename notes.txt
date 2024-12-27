@@ -1,5 +1,1 @@
-Will have to consider what happens once we don't have 5 GWks to go, will need to chuck some dashes in there? - Think this is in there!
-
-When one of the games in the GW has been played, scrap the GW and move forward one. - Think this is in there!
-
-Fix graphs for double GWks
+1. 

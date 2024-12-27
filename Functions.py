@@ -26,7 +26,6 @@ def GetData(url,saveas):
     r = requests.get(url, allow_redirects=True)
     open(saveas, 'wb').write(r.content)
 
-
 def LoadData(files):
     # files: list of csv file paths
     # CurrentDate: The current date
@@ -732,56 +731,6 @@ def MakeDataJS(Teams, Res,DefensiveData, AttackingData):
 
     return DefensfiveDataString, AttackingDataString, DCDataString
 
-def FixGWsAndTime(UpcomingFixtures,thestring,NGWIT=5):
-    # NGWIT is the number if gameweeks we have in theory
-    GWS = list(set(UpcomingFixtures['GW']))
-    GWS.sort(key=float)
-    alphabet_string = string.ascii_lowercase
-    alphabet_list = list(alphabet_string)
-    alphabet_list = alphabet_list[0:NGWIT]
-    for i,GW in enumerate(GWS):
-        thestring = thestring.replace(alphabet_list[i]*3,GW)
-    # Fix if we do not have enough GWs in data
-    for i in range(len(GWS),NGWIT):
-        thestring = thestring.replace('GW ' + alphabet_list[i]*3,'-')
-
-    now = datetime.datetime.today().strftime('%d-%b-%Y')
-    if now[0] == '0':
-        day = now[1]
-    else:
-        day = now[0:2]
-    thestring = thestring.replace('Time',day+ ' ' + now[3:6] + ' ' + now[7:13])
-    return thestring
-
-def MakeContent(thestring,Teams,UpcomingFixtures,Data,rep,base,NGWIT=5):
-    # Data: Where we take data from
-    # rep: thing we want to replace
-    # base: where base of content part is
-    # NGWIT: Number if gameweeks we have in theory
-    GWS = list(set(UpcomingFixtures['GW']))
-    GWS.sort(key=float)
-    content = ''
-    for t,Team in enumerate(Teams):
-        file = open(base)
-        add = file.read()
-        file.close()
-        # edit team pic
-        add = add.replace("TeamPic",Team.replace(" ","_"))
-        # edit team
-        add = add.replace("Team",Team)
-        # edit GW
-        for i,GW in enumerate(GWS):
-            num = Data[GW][t]
-            add = add.replace('num'+str(i),"{:.2f}".format(num))
-        for i in range(len(GWS),NGWIT):
-            add = add.replace('num'+str(i),'-') # Clean up if we do not have enough GWs
-        # edit total
-        num = Data['Total'][t]
-        add = add.replace('Total',"{:.2f}".format(num))
-        content += add
-    thestring = thestring.replace(rep,content)
-    return thestring
-
 def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
    TeamCols =['#EF0107',
             '#670E36',
@@ -908,7 +857,6 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
                ax2.axis("off")
                img = mpimg.imread('logos/' + OppTeam + '2.png')
                ax2.imshow(img)
-
 
     # save fig
    Team = Team.replace(" ", "_")
