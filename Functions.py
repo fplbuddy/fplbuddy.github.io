@@ -605,7 +605,7 @@ def GKData(DefensiveData, Teams):
 
         df.to_csv('Data/GK_' + str(matches) + '.csv', index = False)
 
-def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling = 5):
+def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams):
     UpcomingFixtures['HTG'] = ""
     UpcomingFixtures['ATG'] = ""
     UpcomingFixtures['HTCS'] = ""
@@ -618,8 +618,8 @@ def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams,scaling 
         [HTG, HTCS ,ATG, ATCS, HW, AW, D] = ExpectedGoalsAndCSOutcome(PMatrix)
         UpcomingFixtures['HTG'][index] = HTG
         UpcomingFixtures['ATG'][index] = ATG
-        UpcomingFixtures['HTCS'][index] = HTCS*scaling
-        UpcomingFixtures['ATCS'][index] = ATCS*scaling
+        UpcomingFixtures['HTCS'][index] = HTCS*const.CleanSheetMultiplier
+        UpcomingFixtures['ATCS'][index] = ATCS*const.CleanSheetMultiplier
 
         if LS[row['HomeTeam']] - LS[row['AwayTeam']] >= 5:
             UpcomingFixtures['HMP'][index] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + HW*(const.ManagerWin + const.ManagerWinBonus)

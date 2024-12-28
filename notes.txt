@@ -1,1 +1,8 @@
-1. 
+1.  A script I run which calculates the expected points each player will contribute over the next n gameweeks.
+    Can put captain on the player with the most expected points each gameweeks. Good way to identify weakness.
+    Could also look at impact of hypothetical transfers. What is the best transfer(s) I could make today?
+2.  Think about how I can include the other ways of making or lossing points in my expected points model. Bonus is a key thing.
+    I guess each bonus (3,2,1) should be allocated with some probability to each player. 
+3.  Think about how to display the player data
+4.  Can I approve which players are playing or not rahter than relying on the scrape? Could bould a NN perhaps. 
+5.  Double gemweeks is not taken into account in the expected points model
