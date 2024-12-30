@@ -24,11 +24,22 @@ name_corrections = {
     "Everton": {
         "Harrison": "Jack Harrison", # Before -> After
     },
+    "Man United": {
+        "Casemiro": "Carlos Henrique Casimiro",
+    },
+    "Nott'm Forest": {
+        "Morato": "Felipe Rodrigues da Silva",
+    },
+    "West Ham": {
+        "Lucas Paqueta": "Lucas Tolentino Coelho de Lima",
+    },
 }
 
 X_Auth_Token = "4a28f5bd89ed4b91b21eff78c72038fd" 
 API_url = "https://api.football-data.org/v4/competitions/PL/standings"
 
+
+# Manager Points
 ManagerGWs = 3
 ManagerGWStart = 24
 ManagerGoal = 1
@@ -38,6 +49,7 @@ ManagerDraw = 3
 ManagerWinBonus = 10
 ManagerDrawBonus = 5
 
+# Player Points
 BasePoints = 2
 AssistGoalRatio = 0.91
 AssistPoints = 3
@@ -46,4 +58,13 @@ DEF_GoalPoints = 6
 MID_CleanSheetPoints = 1
 MID_GoalPoints = 5
 FWD_GoalPoints = 4
+
+# Other Game Rules
+NGK = 2
+NDEF = 5
+NMID = 5
+NFWD = 3
+
+# Model parameters
+ExpectedFrac = 0.7
 

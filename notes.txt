@@ -6,3 +6,19 @@
 3.  Think about how to display the player data
 4.  Can I approve which players are playing or not rahter than relying on the scrape? Could bould a NN perhaps. 
 5.  Double gemweeks is not taken into account in the expected points model
+6.  Idea for fully autonomos model: Creat a best team for current gameweek. Then look at the transfers I
+    Need to make today to reach that team. If a transfer is within my allowance, I will make it if it
+    increases my expected points above some threshold over the next few gamweeks. Expected points in futre gamweeks
+    can be weighted I guess. If the transfer is outside my allowance, add const.TransferCost to the threshold.
+    The best team can be calculated using brute force. Especially if I lock in some players that I know I want to keep
+    and limit players I look at by considering the effecient frontiere. Eg, take each positions, eg DEF, take the first n
+    effecient frontieres, as defined by price and expected points. This will exclude rubush players. Say n is 2
+    take the DEFs in the first EF, remvoe these, and then takes the ones in the second as well. Consider all resonable teams
+    with these players, price current players by the money I would get for selling them. Dont calculate expected points if too 
+    expensive, or more than three players from one team is breached. 
+    
+    Seems like compute could be quite heavy... maybe I instead look at teams of people who I know are good players? Eg the ones that have done well historically. 
+    Issue with that is we are looking at old data.
+
+    Could instead consider Three sets first, eg GK, DEF, MID-FWD, assume these do not overlapp, and then piece it together. Think this is dooable! 
+    We then want to maxemuse the sum of three number subject to 3 players per team and budget constraint
