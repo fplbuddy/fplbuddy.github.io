@@ -23,6 +23,7 @@ team_name_map = {
 name_corrections = {
     "Everton": {
         "Harrison": "Jack Harrison", # Before -> After
+        "Beto": "Norberto Bercique Gomes Betuncal",
     },
     "Man United": {
         "Casemiro": "Carlos Henrique Casimiro",
