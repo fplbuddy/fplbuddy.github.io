@@ -6,7 +6,10 @@
 3.  Think about how to display the player data
 4.  Can I approve which players are playing or not rahter than relying on the scrape? Could bould a NN perhaps. 
 5.  Double gemweeks is not taken into account in the expected points model
-6.  Idea for fully autonomos model: Creat a best team for current gameweek. Then look at the transfers I
+6.  Change cost of player I have to be what I would get if I sold them
+7.  When calculating expected points of whole squad, take bench into account with some prob.
+8.  Fix so we can transfer managers
+9.  Idea for fully autonomos model: Creat a best team for current gameweek. Then look at the transfers I
     Need to make today to reach that team. If a transfer is within my allowance, I will make it if it
     increases my expected points above some threshold over the next few gamweeks. Expected points in futre gamweeks
     can be weighted I guess. If the transfer is outside my allowance, add const.TransferCost to the threshold.

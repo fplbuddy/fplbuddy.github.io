@@ -53,6 +53,10 @@ def PickPlayers(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPlayers, Potent
     """
     Optimized version of the PickPlayers function with vectorization.
     """
+
+    # Remove locked players from potential additions
+    PotentialAdditions = [player for player in PotentialAdditions if player not in LockedPlayers]
+
     PositionsToPick = TotalSpots - len(LockedPlayers)
 
     # Generate unique combinations of potential additions

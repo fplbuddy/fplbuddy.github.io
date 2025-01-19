@@ -643,6 +643,7 @@ def GetTables(UpcomingFixtures,Teams):
         AttackingData[GW] = 0.0
     DefensiveData = AttackingData.copy()
     ManagerData = AttackingData.copy()
+    DoubleGWData = AttackingData.copy()
     # Adding the data we want
     for GW in GWS:
         GWData = UpcomingFixtures[UpcomingFixtures['GW']==GW]
@@ -651,22 +652,26 @@ def GetTables(UpcomingFixtures,Teams):
             G = 0
             C = 0
             M = 0
+            GP = 0
             # Search HomeTeam First
             HTData = GWData[GWData['HomeTeam'] == Team]
             G += sum(HTData['HTG'])
             C +=sum(HTData['HTCS'])
             M +=sum(HTData['HMP'])
+            GP += len(HTData)
             # Now do AwayTeam
             ATData = GWData[GWData['AwayTeam'] == Team]
             G += sum(ATData['ATG'])
             C +=sum(ATData['ATCS'])
             M +=sum(ATData['AMP'])
+            GP += len(ATData)
             # Now add it data
             AttackingData[GW][TeamIndex] = round(G,2)
             DefensiveData[GW][TeamIndex] = round(C,2)
             ManagerData[GW][TeamIndex] = round(M,2)
+            DoubleGWData[GW][TeamIndex] = int(GP)
 
-    return AttackingData,DefensiveData,ManagerData
+    return AttackingData,DefensiveData,ManagerData, DoubleGWData
 
 def AdjustManagerTable( ManagerData, Save = True):
     # Start at the right GW
