@@ -1,3 +1,5 @@
+team_id = "7202490"
+
 TotalGWs = 38
 CleanSheetMultiplier = 5
 
@@ -38,7 +40,6 @@ name_corrections = {
 
 X_Auth_Token = "4a28f5bd89ed4b91b21eff78c72038fd" 
 API_url = "https://api.football-data.org/v4/competitions/PL/standings"
-
 
 # Manager Points
 ManagerGWs = 3
