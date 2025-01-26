@@ -164,12 +164,15 @@ def PickPlayers_Team(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPositions,
 
 def PickPlayers(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPlayers, PotentialAdditions, 
                 GK_count, DEF_count, MID_count, FWD_count, 
-                Captain = False, verbose=False): 
+                Captain = False, verbose=False, GWOverride = None): 
     """
     Optimized version of the PickPlayers function with vectorization.
     """
-    entry_data = get_entry_data( const.team_id )[ 'current' ]
-    NextGW = len(entry_data) + 1
+    if GWOverride is None:
+        entry_data = get_entry_data( const.team_id )[ 'current' ]
+        GWStart = len(entry_data) + 1
+    else:
+        GWStart = GWOverride
 
     # Identify locked players' positions
     locked_positions = {
@@ -215,7 +218,7 @@ def PickPlayers(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPlayers, Potent
     PA_groups = np.array(PA_groups)
 
     # Filter relevant columns and rows from the DataFrame
-    columns_to_keep = ["Cost", "Player Name"] + [f"GW{i} Tot Points" for i in range(NextGW, NextGW + GWHorizon)]
+    columns_to_keep = ["Cost", "Player Name"] + [f"GW{i} Tot Points" for i in range(GWStart, GWStart + GWHorizon)]
     Data = Data[columns_to_keep]
 
     # Map player names to their performance data for quick lookup
