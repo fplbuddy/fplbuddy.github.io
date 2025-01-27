@@ -120,7 +120,7 @@ def GetSquad( FPL_Data ):
 
     Squad['Players'] = pd.DataFrame( {'Player ID': current_squad_ids, 'Player Name': current_squad_names, 'Price if Sold': current_player_values, 'Position':  positions} )
     Squad['Bank'] = bank
-    Squad['Total Money'] = Squad['Bank'] + sum( current_player_values )
+    Squad['Total Money'] = np.float(Squad['Bank']) + np.float(sum( current_player_values ))
     return Squad
 
 def PickPlayers_Team(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPositions, PotentialAdditions): 
@@ -251,7 +251,10 @@ def PickPlayers(Data, GWHorizon, PlayingSpots, TotalSpots, LockedPlayers, Potent
         addition_scores = np.array([player_data_map[player] for player in group])
 
         # Concatenate locked and potential addition scores
-        total_scores = np.vstack((locked_scores, addition_scores))
+        if addition_scores.size == 0:
+            total_scores = locked_scores
+        else:
+            total_scores = np.vstack((locked_scores, addition_scores))
         total_cost = sum(player_cost_map[player] for player in LockedPlayers + list(group))
 
         # Calculate the total score
