@@ -36,6 +36,15 @@ name_corrections = {
     "West Ham": {
         "Lucas Paqueta": "Lucas Tolentino Coelho de Lima",
     },
+    "Ipswich": {
+        "Clarke": "Jack Clarke",
+    },
+}
+
+lineup_corrections = {
+    "Man City": {
+        "Harrison": "Jack Harrison", # Before -> After
+    },
 }
 
 X_Auth_Token = "4a28f5bd89ed4b91b21eff78c72038fd" 
