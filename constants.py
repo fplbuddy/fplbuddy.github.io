@@ -39,6 +39,9 @@ name_corrections = {
     "Ipswich": {
         "Clarke": "Jack Clarke",
     },
+    "Chelsea": {
+        "Fofana": "Wesley Fofana",
+    },
 }
 
 lineup_corrections = {
