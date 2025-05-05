@@ -42,6 +42,9 @@ name_corrections = {
     "Chelsea": {
         "Fofana": "Wesley Fofana",
     },
+    "Leicester": {
+        "Thomas": "Luke Thomas",
+    },
 }
 
 lineup_corrections = {
