@@ -92,4 +92,4 @@ function updateTable(tableId, headerId, bodyId, data, gameweeks) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => updateTables(5));
+document.addEventListener("DOMContentLoaded", () => updateTables(3));

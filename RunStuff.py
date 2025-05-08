@@ -32,6 +32,9 @@ DCData = DCData.replace( "DCData", DCDataString )
 GWS = list(set(UpcomingFixtures['GW']))
 GWS.sort(key=float)
 Data = Data.replace( "StartGWNumber", str(GWS[0]))
+MaxSliderValue = min( 10, len(GWS) )
+StartSliderValue = min( 5, MaxSliderValue )
+Data = Data.replace('StartSliderValue', str(StartSliderValue))
 
 Html_file = open("tabledata.js", "w")
 Html_file.write(Data)
@@ -51,8 +54,6 @@ if now[0] == '0':
 else:
     day = now[0:2]
 thestring = thestring.replace('Time',day+ ' ' + now[3:6] + ' ' + now[7:13])
-MaxSliderValue = min( 10, len(GWS) )
-StartSliderValue = min( 5, MaxSliderValue )
 thestring = thestring.replace('MaxSliderValue', str(MaxSliderValue))
 thestring = thestring.replace('StartSliderValue', str(StartSliderValue))
 
@@ -64,8 +65,8 @@ funcs.GKData(DefensiveData, Teams)
 for Team in Teams:
     funcs.Makeplot(DefensiveData,UpcomingFixtures,Team,False)
     funcs.Makeplot(AttackingData,UpcomingFixtures,Team,True)
-    
+
 for Team in Teams:
     funcs.MakeTeamPage(Team,"TeamBase.txt")
-    
+
 funcs.git_push(r'/Users/philipwinchester/Sites/fplbuddy.github.io/.git','Auto')
