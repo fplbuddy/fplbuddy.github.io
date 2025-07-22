@@ -17,6 +17,6 @@ Fixes = None
 #Fixes["Before"] = [ {"GW": '12', "HomeTeam": "Southampton", "AwayTeam": "Brighton" } ]
 #Fixes["After"] = [ {"GW": '13', "HomeTeam": "Southampton", "AwayTeam": "Brighton"  } ]
 
-UpcomingFixtures = funcs.GetUpcomingFixtures_new(Fixes = Fixes)
+UpcomingFixtures = funcs.GetUpcomingFixtures(Fixes = Fixes)
 UpcomingFixtures = funcs.AddtoUpcomingFixtures(UpcomingFixtures, Res,  Res['Gamma'][0],  Res['Rho'][0], Teams)
 AttackingData,DefensiveData, ManagerData, DoubleGWData = funcs.GetTables(UpcomingFixtures,Teams)
