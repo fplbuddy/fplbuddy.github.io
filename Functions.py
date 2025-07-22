@@ -115,7 +115,59 @@ def GetUpcomingFixtures(NumGWs = None, Fixes = None):
 
     return Upcoming_Fixtures
 
-def Playing(UpcomingFixtures,Team,GW):
+import requests
+import pandas as pd
+
+def GetUpcomingFixtures_new(NumGWs=None, Fixes=None):
+    FPL_FIXTURES_URL = "https://fantasy.premierleague.com/api/fixtures/"
+    response = requests.get(FPL_FIXTURES_URL)
+
+    if response.status_code != 200:
+        raise Exception(f"Failed to fetch data: {response.status_code}")
+
+    data = response.json()
+
+    # Filter out fixtures that have already finished
+    upcoming_fixtures = [f for f in data if not f['finished']]
+
+    # Limit by number of GWs if specified
+    if NumGWs is not None:
+        gws = sorted(set(f['event'] for f in upcoming_fixtures))
+        gws = gws[:NumGWs]
+        upcoming_fixtures = [f for f in upcoming_fixtures if f['event'] in gws]
+
+    # Get team ID to name mapping
+    teams_url = "https://fantasy.premierleague.com/api/bootstrap-static/"
+    teams_data = requests.get(teams_url).json()
+    team_id_to_name = {team['id']: team['name'] for team in teams_data['teams']}
+
+    # Construct DataFrame
+    fixtures_df = pd.DataFrame([{
+        'GW': f['event'],
+        'HomeTeam': team_id_to_name[f['team_h']],
+        'AwayTeam': team_id_to_name[f['team_a']]
+    } for f in upcoming_fixtures])
+
+    # Standardize team names
+    OldNames = ["Spurs", "Norwich City", "Manchester City", "Man Utd",
+                "Leicester City", "West Ham United", "Leeds United", "Newcastle United",
+                "Wolverhampton Wanderers", "Nottingham Forest", "Brentford", "Brighton & Hove Albion"]
+    NewNames = ["Tottenham", "Norwich", "Man City", "Man United", "Leicester", "West Ham", "Leeds",
+                "Newcastle", "Wolves", "Nott'm Forest", "Brentford", "Brighton"]
+
+    fixtures_df = fixtures_df.replace(dict(zip(OldNames, NewNames)))
+
+    # Apply manual fixture overrides
+    if Fixes is not None:
+        Before = Fixes['Before']
+        After = Fixes['After']
+        for b, a in zip(Before, After):
+            condition = (fixtures_df['GW'] == b['GW']) & (fixtures_df['HomeTeam'] == b['HomeTeam']) & (fixtures_df['AwayTeam'] == b['AwayTeam'])
+            fixtures_df.loc[condition, 'GW'] = a['GW']
+
+    return fixtures_df.reset_index(drop=True)
+
+def Playing(UpcomingFixtures,Team, GW):
     # Given some Team and GW (str), find out who they are playing,
     playing = ''
     UpcomingFixtures = UpcomingFixtures[UpcomingFixtures["GW"] == GW]
@@ -760,7 +812,8 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
             '#DA291C',
             '#3a64a3',
             '#000000',
-            '#e53233']
+            '#e53233',
+            '#E2231A']
    Teams = ['Arsenal',
             'Aston Villa',
             'Brentford',
@@ -784,7 +837,8 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
             'Bournemouth',
             'Ipswich',
             'Fulham',
-            "Nott'm Forest"]
+            "Nott'm Forest",
+            "Sunderland"]
    Teamid = Teams.index(Team)
    col = TeamCols[Teamid]
    # Inputs
@@ -835,7 +889,7 @@ def Makeplot(Data,UpcomingFixtures,Team,Attack,size = 0.035, shift = 0.02):
     # Add images
    inv = fig.transFigure.inverted()
    for i, GW in enumerate(GWS):
-       OppTeams = Playing(UpcomingFixtures,Team,str(GW))
+       OppTeams = Playing(UpcomingFixtures,Team,GW)
        OppTeams = OppTeams.split('/')
        if OppTeams[0] == '': # Not plating in this gamweek
            pass

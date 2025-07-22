@@ -1,48 +1,48 @@
 const expectedGoalsData = {
-  "Arsenal": { scores: [1.32, 1.96, 2.9], logo: "logos/Arsenal2.png", page: "Arsenal.html" },
-"Aston Villa": { scores: [1.41, 1.99, 1.55], logo: "logos/Aston_Villa2.png", page: "Aston_Villa.html" },
-"Bournemouth": { scores: [1.52, 1.02, 2.15], logo: "logos/Bournemouth2.png", page: "Bournemouth.html" },
-"Brentford": { scores: [2.26, 1.67, 1.73], logo: "logos/Brentford2.png", page: "Brentford.html" },
-"Brighton": { scores: [1.56, 1.17, 1.58], logo: "logos/Brighton2.png", page: "Brighton.html" },
-"Chelsea": { scores: [1.6, 1.89, 1.53], logo: "logos/Chelsea2.png", page: "Chelsea.html" },
-"Crystal Palace": { scores: [1.43, 1.61, 0.94], logo: "logos/Crystal_Palace2.png", page: "Crystal_Palace.html" },
-"Everton": { scores: [0.9, 1.75, 0.92], logo: "logos/Everton2.png", page: "Everton.html" },
-"Fulham": { scores: [1.17, 1.33, 1.08], logo: "logos/Fulham2.png", page: "Fulham.html" },
-"Ipswich": { scores: [1.26, 1.47, 1.42], logo: "logos/Ipswich2.png", page: "Ipswich.html" },
-"Leicester": { scores: [0.74, 1.34, 0.74], logo: "logos/Leicester2.png", page: "Leicester.html" },
-"Liverpool": { scores: [1.34, 2.27, 2.23], logo: "logos/Liverpool2.png", page: "Liverpool.html" },
-"Man City": { scores: [3.1, 1.97, 1.81], logo: "logos/Man_City2.png", page: "Man_City.html" },
-"Man United": { scores: [1.59, 1.08, 1.33], logo: "logos/Man_United2.png", page: "Man_United.html" },
-"Newcastle": { scores: [1.86, 1.06, 1.67], logo: "logos/Newcastle2.png", page: "Newcastle.html" },
-"Nott'm Forest": { scores: [2.11, 1.57, 1.37], logo: "logos/Nott'm_Forest2.png", page: "Nott'm_Forest.html" },
-"Southampton": { scores: [0.61, 0.58, 0.47], logo: "logos/Southampton2.png", page: "Southampton.html" },
-"Tottenham": { scores: [1.78, 1.58, 2.06], logo: "logos/Tottenham2.png", page: "Tottenham.html" },
-"West Ham": { scores: [1.16, 1.21, 1.68], logo: "logos/West_Ham2.png", page: "West_Ham.html" },
-"Wolves": { scores: [1.62, 1.23, 1.5], logo: "logos/Wolves2.png", page: "Wolves.html" },
+  "Arsenal": { scores: [1.64, 2.69, 1.36, 1.56, 1.41, 1.44, 1.97, 1.66, 1.68, 2.33, 2.52, 2.24, 1.27, 1.83, 1.47, 2.15, 1.24, 1.99, 1.6, 1.4, 1.47, 1.44, 1.78, 2.48, 2.73, 1.69, 2.07, 1.38, 1.83, 1.35, 1.98, 1.52, 1.3, 1.56, 1.8, 1.81, 2.52, 1.54], logo: "logos/Arsenal2.png", page: "Arsenal.html" },
+"Aston Villa": { scores: [1.35, 1.46, 1.45, 1.07, 2.18, 1.55, 2.18, 1.79, 1.22, 1.17, 1.31, 2.14, 1.86, 1.58, 0.99, 1.57, 1.54, 1.1, 0.91, 1.35, 1.34, 1.17, 1.24, 1.58, 1.21, 1.72, 2.33, 1.71, 1.19, 1.42, 1.7, 1.24, 2.36, 1.43, 1.94, 2.01, 1.27, 1.12], logo: "logos/Aston_Villa2.png", page: "Aston_Villa.html" },
+"Bournemouth": { scores: [1.14, 1.81, 1.74, 1.67, 1.31, 2.08, 1.51, 1.3, 1.31, 1.09, 1.24, 1.66, 2.12, 1.13, 1.16, 1.38, 2.12, 1.42, 1.07, 0.96, 1.89, 1.54, 1.24, 1.67, 1.34, 1.04, 1.52, 2.3, 1.54, 1.95, 1.5, 0.89, 1.21, 2.26, 1.41, 1.39, 1.19, 1.21], logo: "logos/Bournemouth2.png", page: "Bournemouth.html" },
+"Brentford": { scores: [1.41, 1.57, 2.48, 1.35, 1.63, 1.75, 1.39, 1.79, 1.45, 1.52, 1.54, 1.8, 2.48, 1.04, 2.03, 2.65, 1.95, 1.49, 2.21, 1.22, 2.69, 1.25, 1.53, 1.45, 1.42, 1.13, 1.96, 2.29, 1.37, 2.12, 2.44, 1.33, 1.77, 1.61, 1.94, 1.28, 1.65, 1.34], logo: "logos/Brentford2.png", page: "Brentford.html" },
+"Brighton": { scores: [1.82, 1.26, 1.43, 1.41, 2.27, 1.28, 2.0, 1.58, 1.66, 2.72, 1.56, 1.85, 1.45, 1.62, 1.99, 1.37, 2.76, 1.07, 1.83, 2.55, 1.31, 1.53, 1.68, 1.36, 1.7, 1.49, 1.71, 1.58, 1.16, 2.55, 1.49, 2.35, 2.09, 1.39, 1.45, 2.17, 2.51, 1.8], logo: "logos/Brighton2.png", page: "Brighton.html" },
+"Burnley": { scores: [0.98, 1.3, 0.78, 0.7, 0.74, 0.62, 0.7, 1.28, 0.94, 0.54, 0.86, 0.65, 0.8, 0.8, 0.68, 0.86, 0.66, 0.64, 0.74, 0.87, 0.85, 0.65, 1.07, 1.2, 0.94, 0.73, 0.6, 0.87, 0.59, 0.72, 0.79, 0.94, 0.68, 0.67, 1.18, 0.76, 0.5, 1.02], logo: "logos/Burnley2.png", page: "Burnley.html" },
+"Chelsea": { scores: [1.51, 1.63, 1.62, 1.52, 1.47, 1.79, 1.32, 1.29, 2.46, 1.86, 1.93, 2.09, 1.03, 2.23, 1.25, 1.21, 1.29, 1.44, 1.36, 1.17, 1.49, 1.65, 1.39, 1.77, 1.78, 2.42, 2.27, 0.95, 1.32, 1.4, 1.12, 1.27, 1.6, 1.65, 1.4, 1.22, 2.02, 2.26], logo: "logos/Chelsea2.png", page: "Chelsea.html" },
+"Crystal Palace": { scores: [1.01, 1.24, 1.17, 2.17, 1.44, 1.17, 0.99, 1.21, 0.84, 1.46, 1.58, 1.58, 1.42, 1.85, 1.32, 1.12, 1.97, 1.78, 1.43, 1.14, 1.27, 2.0, 1.09, 1.14, 1.46, 2.01, 1.71, 1.3, 1.64, 2.14, 1.03, 1.24, 1.57, 1.08, 1.11, 1.07, 1.34, 0.91], logo: "logos/Crystal_Palace2.png", page: "Crystal_Palace.html" },
+"Everton": { scores: [1.59, 1.27, 1.27, 1.02, 0.87, 1.26, 1.07, 0.83, 1.43, 1.61, 1.15, 1.05, 1.0, 0.89, 1.0, 0.81, 0.73, 1.49, 0.92, 1.17, 1.38, 0.94, 1.72, 1.17, 1.06, 0.97, 1.14, 0.92, 1.61, 0.67, 0.88, 1.08, 0.94, 1.16, 0.9, 0.99, 1.75, 1.32], logo: "logos/Everton2.png", page: "Everton.html" },
+"Fulham": { scores: [1.47, 1.43, 1.02, 2.16, 1.47, 1.18, 1.12, 0.92, 1.16, 1.73, 1.0, 2.2, 1.66, 1.13, 1.35, 1.87, 1.25, 1.46, 1.24, 1.18, 1.11, 1.99, 1.6, 1.32, 1.08, 1.04, 2.02, 1.8, 1.58, 1.15, 2.03, 1.09, 1.35, 1.28, 0.85, 1.22, 1.59, 1.25], logo: "logos/Fulham2.png", page: "Fulham.html" },
+"Leeds": { scores: [0.74, 0.58, 0.86, 0.91, 1.09, 0.83, 1.23, 1.28, 1.08, 1.01, 0.79, 0.88, 0.71, 0.76, 0.81, 0.93, 0.92, 1.38, 0.75, 0.98, 0.79, 0.99, 0.68, 0.63, 0.86, 0.7, 0.81, 0.78, 1.5, 0.85, 1.01, 0.9, 1.18, 0.77, 1.39, 1.14, 1.09, 1.0], logo: "logos/Leeds2.png", page: "Leeds.html" },
+"Liverpool": { scores: [1.91, 1.82, 1.45, 2.94, 1.7, 1.95, 1.6, 2.25, 2.13, 2.02, 1.64, 1.97, 2.29, 3.45, 3.13, 2.51, 2.61, 2.72, 3.39, 2.09, 1.33, 3.18, 1.76, 1.97, 1.78, 3.18, 1.81, 2.49, 2.5, 2.83, 2.31, 2.27, 1.57, 2.12, 2.07, 1.74, 1.86, 2.31], logo: "logos/Liverpool2.png", page: "Liverpool.html" },
+"Man City": { scores: [2.08, 2.36, 1.93, 1.87, 1.11, 2.66, 1.77, 1.42, 1.55, 1.59, 1.55, 1.51, 2.83, 1.74, 2.88, 1.63, 2.07, 1.51, 2.65, 1.45, 2.09, 1.72, 2.26, 2.18, 1.43, 1.89, 1.64, 2.61, 1.64, 1.91, 1.76, 1.33, 1.2, 2.45, 1.31, 1.93, 1.47, 1.68], logo: "logos/Man_City2.png", page: "Man_City.html" },
+"Man United": { scores: [0.75, 1.09, 1.66, 0.85, 0.9, 1.11, 1.8, 0.89, 1.31, 0.94, 1.36, 0.89, 1.02, 1.29, 1.3, 1.0, 0.97, 1.03, 1.41, 1.63, 1.53, 0.93, 0.69, 1.18, 1.47, 1.19, 0.82, 1.1, 0.95, 1.05, 0.92, 1.77, 0.83, 1.2, 0.97, 1.66, 1.02, 1.2], logo: "logos/Man_United2.png", page: "Man_United.html" },
+"Newcastle": { scores: [1.52, 1.52, 2.56, 2.22, 1.44, 1.18, 1.61, 1.89, 1.86, 1.87, 1.74, 1.46, 1.28, 2.32, 2.61, 2.6, 1.42, 1.69, 2.4, 1.73, 2.78, 2.05, 1.65, 1.4, 1.89, 2.13, 1.34, 1.39, 1.84, 1.31, 2.82, 1.6, 1.56, 1.09, 2.05, 1.48, 2.03, 1.71], logo: "logos/Newcastle2.png", page: "Newcastle.html" },
+"Nott'm Forest": { scores: [1.57, 1.33, 1.69, 0.91, 2.0, 2.35, 1.24, 1.18, 1.2, 1.53, 2.31, 1.17, 1.71, 1.7, 1.07, 1.93, 1.42, 1.21, 1.16, 1.26, 1.56, 0.98, 1.45, 1.44, 2.13, 1.85, 1.27, 1.57, 1.12, 1.54, 1.78, 1.37, 2.17, 2.16, 1.09, 1.34, 1.41, 1.3], logo: "logos/Nott'm_Forest2.png", page: "Nott'm_Forest.html" },
+"Sunderland": { scores: [0.78, 0.92, 0.73, 0.61, 0.63, 0.57, 0.65, 0.85, 0.5, 0.53, 0.45, 0.66, 0.6, 0.54, 0.52, 0.62, 0.73, 1.07, 0.56, 0.82, 0.67, 0.66, 0.72, 1.0, 0.42, 0.58, 0.71, 0.55, 0.98, 0.79, 0.57, 0.89, 0.58, 0.62, 0.79, 0.71, 0.49, 0.55], logo: "logos/Sunderland2.png", page: "Sunderland.html" },
+"Tottenham": { scores: [2.29, 1.18, 1.38, 1.65, 1.66, 1.95, 2.25, 1.45, 1.13, 1.25, 1.62, 0.96, 1.63, 1.31, 1.66, 1.3, 1.34, 1.4, 1.53, 2.48, 1.27, 1.79, 2.11, 1.28, 1.49, 1.42, 1.04, 1.5, 1.52, 1.23, 1.42, 2.29, 1.8, 1.8, 1.34, 2.44, 1.15, 1.23], logo: "logos/Tottenham2.png", page: "Tottenham.html" },
+"West Ham": { scores: [1.73, 0.95, 0.99, 1.55, 1.16, 0.86, 0.73, 1.26, 1.71, 1.08, 1.74, 0.96, 1.01, 1.13, 1.26, 1.1, 0.9, 1.24, 1.37, 1.36, 1.07, 1.42, 1.88, 0.87, 1.6, 1.23, 1.04, 0.93, 1.14, 0.97, 1.01, 1.48, 1.06, 0.93, 1.16, 0.79, 0.99, 1.85], logo: "logos/West_Ham2.png", page: "West_Ham.html" },
+"Wolves": { scores: [1.13, 1.12, 1.08, 1.15, 2.16, 1.66, 1.59, 2.02, 2.02, 1.33, 1.02, 1.34, 1.18, 1.25, 1.42, 0.84, 1.47, 1.09, 1.31, 1.58, 1.0, 1.25, 1.04, 1.21, 1.1, 1.15, 1.24, 1.28, 1.18, 1.35, 0.92, 1.45, 1.99, 1.8, 2.19, 1.47, 1.44, 1.86], logo: "logos/Wolves2.png", page: "Wolves.html" },
 
 };
 
 const defensiveScoreData = {
-  "Arsenal": { scores: [1.31, 1.73, 3.11], logo: "logos/Arsenal2.png", page: "Arsenal.html" },
-"Aston Villa": { scores: [1.09, 1.03, 1.33], logo: "logos/Aston_Villa2.png", page: "Aston_Villa.html" },
-"Bournemouth": { scores: [1.22, 0.7, 2.39], logo: "logos/Bournemouth2.png", page: "Bournemouth.html" },
-"Brentford": { scores: [1.42, 1.32, 1.11], logo: "logos/Brentford2.png", page: "Brentford.html" },
-"Brighton": { scores: [0.99, 0.52, 0.64], logo: "logos/Brighton2.png", page: "Brighton.html" },
-"Chelsea": { scores: [0.78, 1.7, 1.27], logo: "logos/Chelsea2.png", page: "Chelsea.html" },
-"Crystal Palace": { scores: [0.84, 1.46, 0.54], logo: "logos/Crystal_Palace2.png", page: "Crystal_Palace.html" },
-"Everton": { scores: [1.55, 2.8, 0.94], logo: "logos/Everton2.png", page: "Everton.html" },
-"Fulham": { scores: [2.03, 0.94, 0.82], logo: "logos/Fulham2.png", page: "Fulham.html" },
-"Ipswich": { scores: [0.52, 1.31, 0.93], logo: "logos/Ipswich2.png", page: "Ipswich.html" },
-"Leicester": { scores: [0.61, 1.14, 0.58], logo: "logos/Leicester2.png", page: "Leicester.html" },
-"Liverpool": { scores: [1.33, 1.55, 1.96], logo: "logos/Liverpool2.png", page: "Liverpool.html" },
-"Man City": { scores: [2.73, 1.8, 1.69], logo: "logos/Man_City2.png", page: "Man_City.html" },
-"Man United": { scores: [1.57, 0.76, 1.06], logo: "logos/Man_United2.png", page: "Man_United.html" },
-"Newcastle": { scores: [1.01, 0.7, 2.0], logo: "logos/Newcastle2.png", page: "Newcastle.html" },
-"Nott'm Forest": { scores: [2.37, 1.49, 1.09], logo: "logos/Nott'm_Forest2.png", page: "Nott'm_Forest.html" },
-"Southampton": { scores: [0.23, 0.87, 0.27], logo: "logos/Southampton2.png", page: "Southampton.html" },
-"Tottenham": { scores: [1.19, 0.69, 1.03], logo: "logos/Tottenham2.png", page: "Tottenham.html" },
-"West Ham": { scores: [1.02, 1.04, 1.21], logo: "logos/West_Ham2.png", page: "West_Ham.html" },
-"Wolves": { scores: [1.05, 1.0, 0.89], logo: "logos/Wolves2.png", page: "Wolves.html" },
+  "Arsenal": { scores: [2.36, 2.8, 1.18, 2.02, 1.65, 1.53, 2.42, 1.99, 2.16, 2.9, 3.18, 1.92, 1.79, 1.77, 1.86, 2.15, 2.41, 1.72, 2.01, 1.91, 1.32, 1.87, 2.5, 2.67, 3.29, 1.62, 1.77, 1.94, 1.57, 2.55, 2.0, 2.06, 1.5, 1.68, 2.14, 2.27, 3.03, 2.01], logo: "logos/Arsenal2.png", page: "Arsenal.html" },
+"Aston Villa": { scores: [1.09, 1.04, 1.55, 1.8, 2.65, 1.53, 2.48, 1.17, 1.06, 0.66, 1.45, 2.08, 1.54, 0.99, 1.15, 1.66, 1.9, 1.19, 1.01, 1.41, 1.4, 1.95, 0.96, 1.17, 1.3, 1.13, 2.23, 1.39, 1.33, 1.75, 1.81, 1.27, 2.79, 1.39, 1.31, 2.34, 0.78, 0.93], logo: "logos/Aston_Villa2.png", page: "Aston_Villa.html" },
+"Bournemouth": { scores: [0.74, 1.64, 1.26, 1.22, 1.18, 2.18, 1.63, 1.5, 1.51, 1.02, 1.35, 1.91, 2.74, 2.05, 1.43, 1.85, 2.57, 1.13, 1.28, 1.24, 1.41, 1.08, 0.86, 1.49, 1.5, 1.9, 1.76, 2.88, 1.27, 2.43, 2.0, 1.1, 1.05, 2.32, 1.65, 1.48, 1.15, 1.36], logo: "logos/Bournemouth2.png", page: "Bournemouth.html" },
+"Brentford": { scores: [1.04, 1.16, 2.42, 1.1, 1.15, 1.65, 0.85, 1.42, 0.59, 1.17, 0.88, 0.78, 2.24, 0.8, 0.95, 1.98, 1.15, 1.21, 1.08, 1.55, 2.56, 0.96, 1.17, 1.03, 0.75, 0.93, 0.91, 2.09, 1.07, 1.3, 1.83, 1.7, 1.29, 1.5, 1.56, 0.73, 1.31, 0.49], logo: "logos/Brentford2.png", page: "Brentford.html" },
+"Brighton": { scores: [1.15, 1.4, 0.73, 0.94, 0.95, 0.84, 1.02, 0.76, 1.35, 1.83, 1.03, 0.83, 0.91, 1.03, 1.42, 0.41, 2.42, 0.69, 1.27, 2.09, 0.62, 1.07, 1.01, 1.55, 1.17, 0.9, 0.71, 1.04, 0.8, 2.28, 0.5, 1.94, 0.82, 0.97, 0.64, 1.15, 1.68, 1.5], logo: "logos/Brighton2.png", page: "Brighton.html" },
+"Burnley": { scores: [0.51, 1.99, 0.95, 0.27, 0.68, 0.35, 0.56, 1.39, 0.66, 0.49, 0.88, 0.62, 0.42, 0.79, 0.37, 0.77, 0.6, 1.13, 0.45, 0.39, 1.08, 0.21, 0.61, 1.84, 1.01, 0.67, 0.52, 0.51, 1.0, 0.71, 0.66, 0.48, 0.57, 0.43, 1.25, 0.67, 0.4, 0.78], logo: "logos/Burnley2.png", page: "Burnley.html" },
+"Chelsea": { scores: [1.82, 1.94, 1.81, 1.29, 2.02, 1.39, 1.01, 1.53, 3.03, 1.43, 1.81, 2.6, 1.41, 2.35, 1.57, 2.22, 1.21, 1.67, 1.72, 1.17, 1.66, 1.44, 1.67, 2.09, 1.66, 2.49, 2.74, 1.26, 1.52, 1.35, 2.07, 1.32, 2.17, 1.24, 1.68, 0.88, 1.58, 2.9], logo: "logos/Chelsea2.png", page: "Chelsea.html" },
+"Crystal Palace": { scores: [1.11, 1.33, 1.17, 2.71, 1.58, 0.71, 1.71, 1.36, 0.93, 1.09, 1.05, 1.31, 1.81, 2.25, 1.3, 0.98, 1.99, 1.23, 1.45, 0.89, 1.32, 2.57, 1.25, 1.18, 0.92, 2.4, 1.45, 1.66, 1.09, 2.14, 0.86, 1.01, 1.73, 0.6, 1.22, 1.86, 0.96, 1.07], logo: "logos/Crystal_Palace2.png", page: "Crystal_Palace.html" },
+"Everton": { scores: [2.38, 1.42, 1.7, 1.71, 0.91, 2.12, 1.86, 1.21, 1.62, 2.93, 1.84, 2.06, 1.39, 1.61, 1.72, 1.49, 1.44, 2.63, 1.57, 1.47, 1.85, 1.56, 2.53, 1.28, 1.69, 1.76, 2.21, 1.24, 2.77, 1.3, 1.64, 1.32, 1.04, 1.97, 1.35, 1.71, 3.06, 1.47], logo: "logos/Everton2.png", page: "Everton.html" },
+"Fulham": { scores: [0.81, 1.68, 0.99, 2.01, 0.98, 1.06, 1.1, 0.95, 0.78, 1.33, 1.58, 2.59, 0.98, 0.87, 1.34, 2.13, 1.2, 1.45, 1.2, 0.62, 1.13, 1.86, 0.94, 1.53, 1.73, 0.75, 2.45, 1.11, 1.6, 1.07, 2.27, 0.52, 0.85, 1.19, 0.83, 1.24, 1.18, 0.9], logo: "logos/Fulham2.png", page: "Fulham.html" },
+"Leeds": { scores: [1.02, 0.34, 0.39, 0.58, 0.58, 0.62, 0.53, 1.39, 0.91, 0.33, 0.5, 0.59, 0.29, 0.54, 0.22, 0.35, 0.7, 1.72, 0.17, 0.98, 0.31, 0.68, 0.89, 0.42, 0.59, 0.44, 0.49, 0.37, 1.87, 0.59, 0.44, 0.85, 0.69, 0.52, 1.54, 0.43, 0.41, 0.78], logo: "logos/Leeds2.png", page: "Leeds.html" },
+"Liverpool": { scores: [1.6, 1.09, 1.29, 2.48, 2.1, 1.55, 1.33, 2.05, 1.17, 1.55, 1.06, 1.56, 1.81, 2.92, 2.23, 1.27, 1.31, 1.69, 2.37, 1.53, 1.15, 2.62, 1.45, 1.23, 1.2, 2.79, 1.41, 1.96, 1.54, 1.46, 1.13, 1.68, 1.95, 1.7, 1.9, 1.48, 1.4, 1.32], logo: "logos/Liverpool2.png", page: "Liverpool.html" },
+"Man City": { scores: [1.61, 1.54, 1.2, 2.13, 1.22, 2.69, 1.25, 2.18, 1.48, 1.68, 0.97, 1.16, 2.45, 1.61, 2.99, 1.63, 2.04, 1.49, 2.86, 1.55, 1.34, 1.98, 1.77, 1.39, 0.84, 1.76, 1.31, 2.3, 1.64, 1.89, 1.78, 1.41, 1.36, 2.56, 2.03, 1.39, 1.53, 1.63], logo: "logos/Man_City2.png", page: "Man_City.html" },
+"Man United": { scores: [0.97, 1.2, 2.29, 0.77, 1.15, 0.87, 2.61, 0.53, 0.95, 1.08, 0.99, 1.75, 1.21, 1.62, 1.2, 1.26, 1.07, 0.92, 1.35, 1.88, 2.15, 0.89, 0.84, 1.34, 1.13, 1.47, 1.6, 1.36, 0.8, 1.21, 1.12, 2.03, 1.01, 1.0, 0.63, 2.47, 1.22, 0.83], logo: "logos/Man_United2.png", page: "Man_United.html" },
+"Newcastle": { scores: [1.3, 0.81, 2.12, 1.58, 1.35, 1.19, 1.45, 1.03, 1.57, 1.71, 1.07, 1.1, 1.84, 1.35, 2.52, 2.69, 1.37, 1.79, 2.38, 1.59, 2.27, 1.43, 1.44, 0.7, 1.21, 1.21, 0.97, 1.99, 1.94, 1.23, 2.83, 1.44, 1.49, 1.05, 1.17, 1.31, 1.86, 1.43], logo: "logos/Newcastle2.png", page: "Newcastle.html" },
+"Nott'm Forest": { scores: [1.22, 1.45, 1.86, 1.05, 2.38, 2.83, 1.0, 1.38, 1.35, 1.95, 2.27, 0.7, 1.17, 1.44, 1.85, 1.36, 1.43, 1.1, 2.0, 1.3, 1.71, 1.19, 1.08, 1.6, 2.12, 1.58, 0.82, 1.03, 0.97, 1.58, 1.21, 1.45, 2.53, 2.7, 1.23, 1.14, 1.79, 1.5], logo: "logos/Nott'm_Forest2.png", page: "Nott'm_Forest.html" },
+"Sunderland": { scores: [0.88, 1.36, 0.42, 0.57, 0.57, 0.48, 0.83, 0.67, 0.43, 1.0, 0.4, 0.56, 0.6, 0.16, 0.28, 0.37, 0.31, 1.25, 0.35, 0.42, 0.34, 0.67, 0.76, 1.51, 0.32, 0.21, 0.66, 0.5, 1.11, 0.39, 0.3, 0.51, 0.47, 0.57, 0.56, 0.95, 0.87, 0.52], logo: "logos/Sunderland2.png", page: "Sunderland.html" },
+"Tottenham": { scores: [1.87, 0.47, 0.88, 1.07, 0.52, 0.96, 1.46, 0.84, 1.19, 0.78, 1.28, 0.53, 0.95, 0.49, 0.65, 0.73, 0.37, 0.84, 0.55, 2.2, 0.76, 1.2, 1.72, 0.57, 1.14, 0.59, 0.63, 0.82, 0.97, 0.29, 0.85, 2.05, 0.62, 0.83, 0.72, 1.61, 0.67, 1.33], logo: "logos/Tottenham2.png", page: "Tottenham.html" },
+"West Ham": { scores: [2.29, 0.98, 0.92, 0.96, 1.18, 1.42, 0.7, 0.84, 1.69, 0.77, 2.11, 0.96, 0.51, 1.37, 0.68, 1.04, 0.63, 1.16, 0.8, 1.03, 1.05, 0.84, 2.44, 0.85, 1.96, 1.52, 1.09, 0.42, 1.03, 0.74, 0.91, 1.17, 1.04, 1.57, 0.72, 0.81, 0.65, 1.85], logo: "logos/West_Ham2.png", page: "West_Ham.html" },
+"Wolves": { scores: [0.62, 0.82, 1.41, 0.54, 1.68, 0.71, 0.67, 2.13, 1.95, 0.89, 0.72, 1.03, 0.78, 0.91, 1.36, 0.58, 0.71, 0.33, 1.22, 1.28, 1.26, 0.65, 0.52, 0.95, 0.84, 0.79, 0.9, 0.9, 0.41, 0.6, 0.69, 1.14, 1.53, 0.83, 2.28, 0.57, 1.02, 1.8], logo: "logos/Wolves2.png", page: "Wolves.html" },
 
 };
 
@@ -62,7 +62,7 @@ function updateTable(tableId, headerId, bodyId, data, gameweeks) {
 
     // Re-create the header row
     header.innerHTML = `<th>Club</th>`;
-    for (let i = 36; i <= gameweeks + 36 - 1; i++) {
+    for (let i = 1; i <= gameweeks + 1 - 1; i++) {
         header.innerHTML += `<th>GW ${i}</th>`;
     }
     header.innerHTML += `<th>Total</th>`
@@ -92,4 +92,4 @@ function updateTable(tableId, headerId, bodyId, data, gameweeks) {
     }
 }
 
-document.addEventListener("DOMContentLoaded", () => updateTables(3));
+document.addEventListener("DOMContentLoaded", () => updateTables(5));

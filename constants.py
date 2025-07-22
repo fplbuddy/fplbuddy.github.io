@@ -3,8 +3,8 @@ team_id = "7202490"
 TotalGWs = 38
 CleanSheetMultiplier = 5
 
-files = [ 'Data/23_24.csv', 'Data/24_25.csv']
-urls = [ 'https://www.football-data.co.uk/mmz4281/2324/E0.csv', 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' ]
+files = [ 'Data/24_25.csv']
+urls = [ 'https://www.football-data.co.uk/mmz4281/2425/E0.csv' ]
 
 team_name_map = {
     "Nott'm Forest": ["Nottingham", "Nottingham Forest"],
