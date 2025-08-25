@@ -54,8 +54,19 @@ def GetUpcomingFixtures(NumGWs=None, Fixes=None):
 
     data = response.json()
 
-    # Filter out fixtures that have already finished
-    upcoming_fixtures = [f for f in data if not f['finished']]
+    # Group fixtures by gameweek
+    fixtures_by_gw = {}
+    for f in data:
+        gw = f["event"]
+        if gw is None:  # skip fixtures with no gameweek assigned
+            continue
+        fixtures_by_gw.setdefault(gw, []).append(f)
+
+    # Keep only GWs where *all* fixtures are not started/finished
+    upcoming_fixtures = []
+    for gw, fixtures in fixtures_by_gw.items():
+        if all((not f["finished"] and f["started"] == False) for f in fixtures):
+            upcoming_fixtures.extend(fixtures)
 
     # Limit by number of GWs if specified
     if NumGWs is not None:
