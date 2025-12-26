@@ -1,4 +1,4 @@
-team_id = "7202490"
+team_id = "98266"
 
 TotalGWs = 38
 CleanSheetMultiplier = 5
@@ -45,6 +45,9 @@ name_corrections = {
     "Leicester": {
         "Thomas": "Luke Thomas",
     },
+    "Man City": {
+        "Savinho": "Savio Moreira de Oliveira",
+    },
 }
 
 lineup_corrections = {
@@ -66,6 +69,9 @@ ManagerDraw = 3
 ManagerWinBonus = 10
 ManagerDrawBonus = 5
 
+# For Bonus Points
+bonusPointLambda = 1.3
+
 # Player Points
 BasePoints = 2
 AssistGoalRatio = 0.91
@@ -75,6 +81,36 @@ DEF_GoalPoints = 6
 MID_CleanSheetPoints = 1
 MID_GoalPoints = 5
 FWD_GoalPoints = 4
+
+# Bayesian  Priors, used for players who have not played very much
+PRIORS = {
+    "Goalkeeper": {
+        "G90": 0.0,
+        "A90": 0.01,
+        "DEF90": 0.0
+    },
+    "Defender": {
+        "G90": 0.05,
+        "A90": 0.07,
+        "DEF90": 7.8
+    },
+    "Midfielder": {
+        "G90": 0.15,
+        "A90": 0.15,
+        "DEF90": 8.4
+    },
+    "Forward": {
+        "G90": 0.41,
+        "A90": 0.05,
+        "DEF90": 4.5
+    }
+}
+priorMins = 360
+
+# DEFCON
+DEF_DEFCON = 10
+MID_DEFCON = 13
+DEFCON_Points = 2
 
 # Other Game Rules
 NGK = 2

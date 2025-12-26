@@ -15,6 +15,14 @@ from unidecode import unidecode
 from getters import *
 import math
 
+def bayesian_per90(rate, minutes, prior_rate, prior_minutes=const.priorMins, div_min = False):
+    if minutes <= 0:
+        return prior_rate
+    if div_min:
+        rate = ( rate / minutes ) * 90
+    return (rate * minutes + prior_rate * prior_minutes ) / (minutes + prior_minutes)
+
+
 def GetFPLPlayerData():
     """ Retrieve the fpl player data from the hard-coded url
     """
@@ -42,21 +50,24 @@ def GetFPLPlayerData():
         # Create a list of dictionaries for the DataFrame
         player_data = []
         for player in players:
+            pos = positions.get(player['element_type'], "Unknown")
+            priors = const.PRIORS.get(pos)
             player_data.append({
                 "Player ID": player['id'],
                 "Player Name": f"{player['first_name']} {player['second_name']}",
                 "Team": teams.get(player['team'], "Unknown"),
-                "Position": positions.get(player['element_type'], "Unknown"),
-                "xA/90": player['expected_assists_per_90'],  # Expected assists per 90 minutes
-                "xG/90": player['expected_goals_per_90'],    # Expected goals per 90 minutes
+                "Position": pos,
+                "xA/90": bayesian_per90(player['expected_assists_per_90'], player['minutes'], priors["A90"]),  # Expected assists per 90 minutes
+                "xG/90": bayesian_per90(player['expected_goals_per_90'], player['minutes'], priors["G90"]),    # Expected goals per 90 minutes
                 "Minutes": player['minutes'],
                 "Goals": player['goals_scored'],
                 "Assists": player['assists'],
-                "G/90": ( player['goals_scored'] / max( player['minutes'], 45 ) ) * 90,  # Goals per 90 minutes
-                "A/90": ( player['assists'] / max( player['minutes'], 45 ) ) * 90,       # Assists per 90 minutes
+                "G/90": bayesian_per90(player['goals_scored'], player['minutes'], priors["G90"], div_min = True),
+                "A/90": bayesian_per90(player['assists'], player['minutes'], priors["A90"], div_min = True),       # Assists per 90 minutes
                 "Cost": player['now_cost'],
                 "Start Cost": ( player['now_cost'] - player['cost_change_start'] ),  # Start cost in millions
                 "Selected By (%)": player['selected_by_percent'],
+                "DEFCON/90": bayesian_per90(player['defensive_contribution'], player['minutes'], priors["DEF90"], div_min = True),
             })
 
         # Create DataFrame
@@ -320,3 +331,14 @@ def all_efficient_frontiers(data, x_col, y_col, n):
     combined_frontiers = pd.concat(frontiers, ignore_index=True)
     return combined_frontiers
 
+def averageAnalysis( FPL_Data ):
+    FPL_Data["Total xG"] = FPL_Data["xG/90"] * ( FPL_Data["Minutes"] / 90 )
+    FPL_Data["Total xA"] = FPL_Data["xA/90"] * ( FPL_Data["Minutes"] / 90 )
+    FPL_Data["Total DEFCON"] = FPL_Data["DEFCON/90"] * ( FPL_Data["Minutes"] / 90 )
+    columnsToInspect = [ "Total xG", "Total xA", "Goals", "Assists", "Total DEFCON" ]
+    for c in columnsToInspect:
+        for position in [ "Goalkeeper", "Defender", "Midfielder", "Forward" ]:
+            top = FPL_Data[ FPL_Data["Position"] == position ][ c ].sum()
+            bottom = FPL_Data[ FPL_Data["Position"] == position ][ "Minutes" ].sum()
+            avg = ( top / bottom ) * 90
+            print( f"Average {c} for {position}: {round(avg,2)}" )
