@@ -546,19 +546,21 @@ def ProbMatrix(HomeTeam, AwayTeam, Parameters, gamma, rho, Teams,Max = 10):
       return(Result)
 
 def ExpectedGoalsAndCSOutcome(ProbMatrix):
-  D = np.trace(ProbMatrix)
-  AW = np.sum(np.triu(ProbMatrix, k = 1))
-  HW = np.sum(np.tril(ProbMatrix, k = -1))
+    D = np.trace(ProbMatrix)
+    AW = np.sum(np.triu(ProbMatrix, k = 1))
+    HW = np.sum(np.tril(ProbMatrix, k = -1))
 
-  # Calculate expected goals HT
-  probs = np.sum(ProbMatrix,axis=1)
-  HTG = np.inner(probs,np.arange(len(probs)))
-  ATCS = probs[0]
-  # Calculate expected goals AT
-  probs = np.sum(ProbMatrix,axis=0)
-  ATG = np.inner(probs,np.arange(len(probs)))
-  HTCS = probs[0]
-  return [HTG, HTCS ,ATG, ATCS, HW, AW, D]
+    # Calculate expected goals HT
+    probs = np.sum(ProbMatrix,axis=1)
+    HTG = np.inner(probs,np.arange(len(probs)))
+    ATCS = probs[0]
+    ATCons = -1*( probs[2] + probs[3] ) - 2*( np.sum(probs[4:]) ) # Approximate as -2 for 4 or more goals conceded
+    # Calculate expected goals AT
+    probs = np.sum(ProbMatrix,axis=0)
+    ATG = np.inner(probs,np.arange(len(probs)))
+    HTCS = probs[0]
+    HTCons = -1*( probs[2] + probs[3] ) - 2*( np.sum(probs[4:]) )
+    return [HTG, HTCS ,ATG, ATCS, HW, AW, D, HTCons, ATCons]
 
 def GKData(DefensiveData, Teams):
     for f in glob.glob("Data/GK*"):
@@ -601,15 +603,19 @@ def AddtoUpcomingFixtures(UpcomingFixtures,Parameters,gamma, rho, Teams):
     UpcomingFixtures['HTCS'] = ""
     UpcomingFixtures['ATCS'] = ""
     UpcomingFixtures['HMP'] = "" 
-    UpcomingFixtures['AMP'] = "" 
+    UpcomingFixtures['AMP'] = ""
+    UpcomingFixtures['HTCons'] = ""
+    UpcomingFixtures['ATCons'] = ""
     LS = LeagueStanding()
     for index, row in UpcomingFixtures.iterrows():
         PMatrix = ProbMatrix(row['HomeTeam'], row['AwayTeam'], Parameters, gamma, rho, Teams)
-        [HTG, HTCS ,ATG, ATCS, HW, AW, D] = ExpectedGoalsAndCSOutcome(PMatrix)
+        [HTG, HTCS ,ATG, ATCS, HW, AW, D, HTCons, ATCons] = ExpectedGoalsAndCSOutcome(PMatrix)
         UpcomingFixtures['HTG'][index] = HTG
         UpcomingFixtures['ATG'][index] = ATG
         UpcomingFixtures['HTCS'][index] = HTCS*const.CleanSheetMultiplier
         UpcomingFixtures['ATCS'][index] = ATCS*const.CleanSheetMultiplier
+        UpcomingFixtures['HTCons'][index] = HTCons
+        UpcomingFixtures['ATCons'][index] = ATCons
 
         if LS[row['HomeTeam']] - LS[row['AwayTeam']] >= 5:
             UpcomingFixtures['HMP'][index] = HTCS*const.ManagerCS + HTG*const.ManagerGoal + D*( const.ManagerDraw + const.ManagerDrawBonus ) + HW*(const.ManagerWin + const.ManagerWinBonus)
@@ -634,6 +640,7 @@ def GetTables(UpcomingFixtures,Teams):
     DefensiveData = AttackingData.copy()
     ManagerData = AttackingData.copy()
     DoubleGWData = AttackingData.copy()
+    ConcededData = AttackingData.copy()
     # Adding the data we want
     for GW in GWS:
         GWData = UpcomingFixtures[UpcomingFixtures['GW']==GW]
@@ -643,14 +650,17 @@ def GetTables(UpcomingFixtures,Teams):
             C = 0
             M = 0
             GP = 0
+            Cons = 0
             # Search HomeTeam First
             HTData = GWData[GWData['HomeTeam'] == Team]
+            Cons += sum(HTData['HTCons'])
             G += sum(HTData['HTG'])
             C +=sum(HTData['HTCS'])
             M +=sum(HTData['HMP'])
             GP += len(HTData)
             # Now do AwayTeam
             ATData = GWData[GWData['AwayTeam'] == Team]
+            Cons += sum(ATData['ATCons'])
             G += sum(ATData['ATG'])
             C +=sum(ATData['ATCS'])
             M +=sum(ATData['AMP'])
@@ -660,8 +670,9 @@ def GetTables(UpcomingFixtures,Teams):
             DefensiveData[GW][TeamIndex] = round(C,2)
             ManagerData[GW][TeamIndex] = round(M,2)
             DoubleGWData[GW][TeamIndex] = int(GP)
+            ConcededData[GW][TeamIndex] = round(Cons,2)
 
-    return AttackingData,DefensiveData,ManagerData, DoubleGWData
+    return AttackingData,DefensiveData,ManagerData, DoubleGWData, ConcededData
 
 def AdjustManagerTable( ManagerData, Save = True):
     # Start at the right GW
